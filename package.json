@@ -1,0 +1,22 @@
+{
+  "name": "npmtestforbm",
+  "version": "1.0.0",
+  "description": "npm test for BM",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amit-kremer93/npmTestForBM.git"
+  },
+  "author": "amit",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amit-kremer93/npmTestForBM/issues"
+  },
+  "homepage": "https://github.com/amit-kremer93/npmTestForBM#readme",
+  "dependencies": {
+    "request": "~2.88.2"
+  }
+}
