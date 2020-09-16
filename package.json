@@ -16,7 +16,5 @@
     "url": "https://github.com/amit-kremer93/npmTestForBM/issues"
   },
   "homepage": "https://github.com/amit-kremer93/npmTestForBM#readme",
-  "dependencies": {
-    "request": "~2.88.2"
-  }
+  "dependencies": {}
 }
