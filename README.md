@@ -17,8 +17,8 @@ Cordova AppsFlyer plugin version **4.4.0** and higher are meant to be used with 
 
 ### <a id="plugin-build-for"> This plugin is built for
 
-- iOS AppsFlyerSDK **v6.0.8**
-- Android AppsFlyerSDK **v6.0.8**
+- iOS AppsFlyerSDK **v6.0.9**
+- Android AppsFlyerSDK **v6.0.9**
 
 
 ## <a id="installation">📲Installation
