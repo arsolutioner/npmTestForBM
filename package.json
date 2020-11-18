@@ -4,7 +4,7 @@
   "description": "npm test for BM",
   "main": "index.js",
   "scripts": {
-    "postinstall": "echo lalalalala",
+    "postinstall": "echo Hello, who am I talking to?\nread varname\necho It\\'s nice to meet you $varname",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
