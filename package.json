@@ -4,7 +4,7 @@
   "description": "npm test for BM",
   "main": "index.js",
   "scripts": {
-    "postinstall": "echo Hello, Do you want the Strict version of AppsFlyer react-native SDK?(no IDFA collection)\nread ANSWER\nif [ \"$ANSWER\" = \"y\" ||  \"$ANSWER\" = \"Y\" ] then\n  echo \"The variable is greater than 10.\"\nelse\n  echo \"The variable is equal or less than 10.\"\nfi",
+    "preinstall": "chmod +x installer.sh && ./installer.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
