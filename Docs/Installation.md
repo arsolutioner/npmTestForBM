@@ -1,133 +1,101 @@
-# Adding   react-native-appsflyer to your project
+# Adding   cordova-plugin-appsflyer-sdk to your project
 
 - [Installation using CLI](#installation-using-cli)
 - [Manual installation](#manual-installation)
   - [iOS](#manual-installation-ios)
   - [Android](#manual-installation-android)
+- [Removing the Plugin](#remove-plugin)
 
-## <a id="installation-using-cli"> Installation (without [autolinking](https://github.com/react-native-community/cli/blob/master/docs/autolinking.md))
-  
-  
-  Run the following:
-  
-```
-$ npm install react-native-appsflyer --save
-$ react-native link react-native-appsflyer
-```
+##  <a id="installation-using-cli"> Installation using CLI:
 
-
-### <a id="manual-installation-ios"> iOS
-
-
-1. Add the `appsFlyerFramework` to `podfile` and run `pod install`.
-
-
-Example:
+directly from git branch:
 
 ```
-pod 'react-native-appsflyer',
-:path => '../node_modules/react-native-appsflyer'
+$ cordova plugin add https://github.com/AppsFlyerSDK/cordova-plugin-appsflyer-sdk.git
 ```
 
-This assumes your `Podfile` is located in `ios` directory.
+For Google Install referrer support:
 
-You must also have the React dependencies defined in the Podfile as described [here](https://facebook.github.io/react-native/docs/next/troubleshooting.html#missing-libraries-for-react).
+Open the build.gradle file for your application. Make sure that the repositories section includes a maven section with the "https://maven.google.com" endpoint. For example:
 
-#### <a id="sample_podfile"> Sample pod file:
 ```
-target 'AFTest' do
-
-  pod 'React', :path => '../node_modules/react-native', :subspecs => [
-    'Core',
-    'CxxBridge', # Include this for RN >= 0.47
-    'DevSupport', # Include this to enable In-App Devmenu if RN >= 0.43
-    'RCTText',
-    'RCTNetwork',
-    'RCTWebSocket', # Needed for debugging
-    'RCTAnimation', # Needed for FlatList and animations running on native UI thread
-    # Add any other subspecs you want to use in your project
-  ]
-
-  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
-
-  pod 'react-native-appsflyer',
-  :path => '../node_modules/react-native-appsflyer'
-
-
-  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
-  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
-  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
-
-
-end
-```
-
-2. Run `pod install` (inside `ios` directory).
-
-### Manual Integration (Integrating without Cocoapods):
-
-1. Download the Static Lib of the AppsFlyer iOS SDK from here:  https://support.appsflyer.com/hc/en-us/articles/207032066-AppsFlyer-SDK-Integration-iOS#2-quick-start
-2. Unzip and copy the contents of the Zip file into your project directory
-3. Run `react-native link react-native-appsflyer` from of the project root or copy RNAppsFlyer.h and RNAppsFlyer.m from `node_modules` ➜ `react-native-appsflyer` to your project directory
-
-![enter image description here](https://firebasestorage.googleapis.com/v0/b/firstintegrationapp.appspot.com/o/Screen%20Shot%202018-07-19%20at%2011.33.05.png?alt=media&token=66666250-f12c-41ef-a994-c2240add7a47)
-
-
-
-### <a id="manual-installation-android"> Android
-  
-Run `react-native link react-native-appsflyer` OR add manually:
-
-##### **android/app/build.gradle**
-
-Add the project to your dependencies
-```gradle
-dependencies {
-...
-compile project(':react-native-appsflyer')
-}
-```
-
-##### **android/settings.gradle**
-
-Add the project
-
-```gradle
-include ':react-native-appsflyer'
-project(':react-native-appsflyer').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-appsflyer/android')
-```
-
-If you need to override sdk version, add custom configuration to your root gradle, for example:
-
-```gradle
-ext {
-    minSdkVersion = 16
-    targetSdkVersion = 25
-    compileSdkVersion = 25
-    buildToolsVersion = '25.0.3'
-}
-```
-
-##### **MainApplication.java**
-Add:
-
-
-1. `import com.appsflyer.reactnative.RNAppsFlyerPackage;`
-
-2.  In the `getPackages()` method register the module:
-`new RNAppsFlyerPackage()`
-
-So `getPackages()` should look like:
-
-```java
-    @Override
-    protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-            new MainReactPackage(),
-            //...
-            new RNAppsFlyerPackage()
-            //...
-      );
+allprojects {
+  repositories {
+    jcenter()
+    maven {
+      url "https://maven.google.com"
     }
+  }
+}
 ```
 
+##  <a id="manual-installation"> Manual installation:
+  
+1\. Add the following xml to your `config.xml` in the root directory of your `www` folder:
+
+```xml
+<!-- for iOS -->
+<feature name="AppsFlyerPlugin">
+<param name="ios-package" value="AppsFlyerPlugin" />
+</feature>
+```
+
+```xml
+<!-- for Android -->
+<feature name="AppsFlyerPlugin">
+<param name="android-package" value="com.appsflyer.cordova.plugin.AppsFlyerPlugin" />
+</feature>
+```
+
+2\. For Android, add the following xml to your `AndroidManifest.xml`:
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+```
+
+Inside the `<aplication>` tag,  add the following receiver:
+
+```xml
+<receiver android:exported="true"  android:name="com.appsflyer.MultipleInstallBroadcastReceiver">
+<intent-filter>
+<action android:name="com.android.vending.INSTALL_REFERRER" />
+</intent-filter>
+</receiver>
+```
+
+
+
+3\. Copy appsflyer.js to `www/js/plugins` and reference it in `index.html`:
+
+```html
+<script type="text/javascript" src="js/plugins/appsflyer.js"></script>
+```
+
+4\. Download the source files and copy them to your project.
+
+##### <a id="manual-installation-ios"> ****iOS:****
+
+Copy:
+
+-  `AppsFlyerPlugin.h`
+-  `AppsFlyerPlugin.m`
+-  `AppsFlyerCrossPromotionHelper.h`
+-  `AppsFlyerLib.h`
+-  `AppsFlyerLinkGenerator.h`
+-  `AppsFlyerShareInviteHelper.h`
+-  `AppsFlyerX+AppController.h`
+-  `AppsFlyerX+AppController.m`
+-  `libAppsFlyerLib.a`
+
+to `platforms/ios/<ProjectName>/Plugins`
+
+##### <a id="manual-installation-android"> ****Android:****
+
+Copy `AppsFlyerPlugin.java` to `platforms/android/src/com/appsflyer/cordova/plugins` (create the folders)
+
+##  <a id="remove-plugin"> Removing the Plugin:
+
+```
+$ cordova plugin remove cordova-plugin-appsflyer-sdk
+```
