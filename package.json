@@ -1,6 +1,6 @@
 {
   "name": "npmtestforbm",
-  "version": "6.1.0",
+  "version": "6.2.30",
   "description": "npm test for BM",
   "main": "index.js",
   "scripts": {
