@@ -311,7 +311,3 @@ Overview and Highlights
 * Fixed typo in `appsflyer.js`
 * added `RELEASENOTES.md`
 * changed `README.md` (added Ionic example) 
-
-###6.0.3
-Release date: *2021-March-02*
-%!s(MISSING)
