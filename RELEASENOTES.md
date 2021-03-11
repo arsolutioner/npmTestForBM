@@ -1,4 +1,10 @@
 # Release Notes
+### 6.2.40
+Release date: *2021-March-11*
+
+**Overview and Highlights:**
+- Cordova > iOS SDK v6.2.3
+
 ### 6.0.5
 Release date: *2021-March-04*
 
