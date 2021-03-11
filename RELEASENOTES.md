@@ -1,9 +1,9 @@
 # Release Notes
-### 6.0.3
-Release date: *2021-March-03*
+### 6.0.5
+Release date: *2021-March-04*
 
 **Overview and Highlights:**
-- Cordova > Update to 6.0.3
+- Cordova > Update to 6.0.4
 
 ### 6.0.3
 Release date: *2021-March-01*
