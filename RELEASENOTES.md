@@ -1,4 +1,9 @@
 # Release Notes
+### 6.2.43
+Release date: *2021-March-30*
+
+**Overview and Highlights:**
+
 ### 6.2.40
 Release date: *2021-March-11*
 
