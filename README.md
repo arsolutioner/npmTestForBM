@@ -1,6 +1,6 @@
 
 <img src="https://raw.githubusercontent.com/AppsFlyerSDK/appsflyer-capacitor-plugin/main/assets/AFLogo_primary.png"  width="450">
-test
+
 # React Native AppsFlyer plugin for Android and iOS.
 
 🛠 In order for us to provide optimal support, we would kindly ask you to submit any issues to support@appsflyer.com
