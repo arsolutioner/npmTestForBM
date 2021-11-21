@@ -1,6 +1,6 @@
-language: ruby
-rvm:
- - 2.2
- - jruby
- script:
-  - echo "Hellooooooo"
+language: bash
+
+sudo: required
+
+script:
+    - echo "Helloooooo"
