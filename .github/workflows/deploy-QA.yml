@@ -21,8 +21,6 @@ jobs:
 
       - name: Push to github
         run: |
-          git config --global user.name "amit.kremer"
-          git config --global user.email "amit-kremer93@users.noreply.github.com"
           git commit -m "QA version published with github-ci"
           git push
 
