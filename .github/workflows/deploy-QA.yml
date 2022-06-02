@@ -6,9 +6,6 @@ jobs:
   push-to-npm:
     runs-on: ubuntu-latest
     environment: Staging
-    env: 
-      CI_COMMIT_MESSAGE: Continuous Integration Build Artifacts
-      CI_COMMIT_AUTHOR: amit-kremer93
     steps:
       - uses: actions/checkout@v3
       - name: Update package.json file
@@ -16,9 +13,9 @@ jobs:
           plugin_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+-rc[0-9]+')
           echo $plugin_version
           npm version $plugin_version
-          git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
-          git config --global user.email "amit.kremer@appsflyer.com"
-          git commit -m "${{ env.CI_COMMIT_MESSAGE }}"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "QA version published with github-ci"
           git push
 
       - name: Push to NPM
