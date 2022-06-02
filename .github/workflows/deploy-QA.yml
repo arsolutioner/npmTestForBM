@@ -8,6 +8,11 @@ jobs:
     environment: Staging
     steps:
       - uses: actions/checkout@v3
+      - name: Login to Github
+        run: |
+          git config --global user.name "amit.kremer"
+          git config --global user.email "amit-kremer93@users.noreply.github.com"
+
       - name: Update package.json file
         run: |
           plugin_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+-rc[0-9]+')
