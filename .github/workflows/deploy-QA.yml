@@ -10,12 +10,12 @@ jobs:
       - uses: actions/checkout@v3
       - name: Login to Github
         env: 
-          CI_COMMIT_AUTHOR: ${{ secrets.CI_COMMIT_AUTHOR }}
-          CI_COMMIT_EMAIL: ${{ secrets.CI_COMMIT_EMAIL }}
+          COMMIT_AUTHOR: ${{ secrets.CI_COMMIT_AUTHOR }}
+          COMMIT_EMAIL: ${{ secrets.CI_COMMIT_EMAIL }}
         run: |
           echo "$CI_COMMIT_AUTHOR"
-          git config --global user.name "$CI_COMMIT_AUTHOR"
-          git config --global user.email "$CI_COMMIT_EMAIL"
+          git config --global user.name "$COMMIT_AUTHOR"
+          git config --global user.email "$COMMIT_EMAIL"
 
       - name: Update package.json file
         run: |
