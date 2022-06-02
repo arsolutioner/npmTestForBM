@@ -9,15 +9,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Update package.json file
-      - run: |
+        run: |
           plugin_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+-rc[0-9]+')
           npm version $plugin_version
           git config --global user.name "amit.kremer"
           git config --global user.email "amit.kremer@appsflyer.com"
           git commit -m "QA version published with github-ci"
           git push
+
       - name: Push to NPM
-      - run: |
+        run: |
           npm publish --dry-run
 
 
