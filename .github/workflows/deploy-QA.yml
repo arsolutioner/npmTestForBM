@@ -18,9 +18,6 @@ jobs:
           plugin_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+-rc[0-9]+')
           echo $plugin_version
           npm version $plugin_version
-
-      - name: Push to github
-        run: |
           git commit -m "QA version published with github-ci"
           git push
 
