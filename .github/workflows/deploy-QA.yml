@@ -3,24 +3,17 @@ name: Deploy To QA
 on: [workflow_call]
 
 jobs:
-  update-package-json-version:
-    runs-on: ubuntu-latest
-    # environment: Staging
-    steps:
-      - run: |
-          echo "here we run npm version"
-
   push-to-npm:
     runs-on: ubuntu-latest
-    # environment: Staging
-    needs: [update-package-json-version]
+    environment: Staging
     steps:
       - run: |
-          echo "here we push to npm"
+          version="US/Central - 10:26 PM (CST)" | grep -oP "\-\s+\K\d{2}:\d{2}"
+          echo "${version}"
 
   report-slack:
     runs-on: ubuntu-latest
-    # environment: Staging
+    environment: Staging
     needs: [push-to-npm]
     steps:
       - run: |
