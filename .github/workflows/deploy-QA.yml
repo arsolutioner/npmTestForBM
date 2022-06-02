@@ -13,8 +13,11 @@ jobs:
           plugin_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+-rc[0-9]+')
           echo $plugin_version
           npm version $plugin_version
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Push to github
+        run: |
+          git config --global user.name "amit.kremer"
+          git config --global user.email "amit-kremer93@users.noreply.github.com"
           git commit -m "QA version published with github-ci"
           git push
 
