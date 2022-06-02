@@ -7,9 +7,27 @@ jobs:
     runs-on: ubuntu-latest
     environment: Staging
     steps:
-      - run: |
-          version="US/Central - 10:26 PM (CST)" | grep -oP "\-\s+\K\d{2}:\d{2}"
-          echo "${version}"
+      - uses: actions/checkout@v3
+      - name: Login to Github
+        env: 
+          CI_COMMIT_MESSAGE: QA version published with github-ci
+          CI_COMMIT_AUTHOR: amit.kremer
+          CI_COMMIT_EMAIL: amit-kremer93@users.noreply.github.com
+        run: |
+          git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
+          git config --global user.email "${{ env.CI_COMMIT_EMAIL }}"
+
+      - name: Update package.json file
+        run: |
+          plugin_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+-rc[0-9]+')
+          echo $plugin_version
+          npm version $plugin_version
+          git push
+
+      - name: Push to NPM
+        run: |
+          npm publish --dry-run
+
 
   report-slack:
     runs-on: ubuntu-latest
