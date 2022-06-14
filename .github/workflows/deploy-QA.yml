@@ -3,7 +3,7 @@ name: Deploy To QA
 on: [workflow_call]
 
 jobs:
-  push-to-npm:
+  Deploy-to-QA:
     runs-on: ubuntu-latest
     environment: Staging
     steps:
@@ -26,11 +26,16 @@ jobs:
       - name: Push to NPM
         run: |
           npm publish --dry-run
+      
+      - name: Get Jira tickets for version
+        run: |
+          fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
+          echo "Getting jira tickets related to React-Native SDK v$plugin_version"
 
-  report-slack:
-    runs-on: ubuntu-latest
-    environment: Staging
-    needs: [push-to-npm]
-    steps:
-      - run: |
-          echo "here we report slack"
+      - name: Generate slack report
+        run: | 
+          echo slack report generated
+
+      - name: Send slack report
+        run: |
+          echo slack report sent
