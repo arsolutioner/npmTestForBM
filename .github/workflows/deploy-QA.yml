@@ -14,8 +14,8 @@ jobs:
           COMMIT_EMAIL: ${{ secrets.CI_COMMIT_EMAIL }}
         run: |
           echo "$CI_COMMIT_AUTHOR"
-          git config --global user.name "$COMMIT_AUTHOR"
-          git config --global user.email "$COMMIT_EMAIL"
+          git config --global user.name env.COMMIT_AUTHOR
+          git config --global user.email env.COMMIT_EMAIL
 
       - name: Update package.json file
         run: |
