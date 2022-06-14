@@ -38,7 +38,11 @@ jobs:
           jira_fixed_version="React-Native SDK v$fixed_version"
           echo "Getting jira tickets related to $jira_fixed_version"
           curl -X GET -H "Authorization: Basic bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions | jq -r '.[].name' | while read name ; do
-            echo "${name}"
+            if [$name == $jira_fixed_version]
+              echo "${name}"
+            then
+
+            fi
           done
 
       - name: Generate slack report
