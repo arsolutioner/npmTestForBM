@@ -24,8 +24,11 @@ jobs:
           git push
 
       - name: Push to NPM
-        run: |
-          npm publish --tag QA --dry-run
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          dry-run: true
+          tag: "QA"
       
       - name: Get Jira tickets for version
         run: |
