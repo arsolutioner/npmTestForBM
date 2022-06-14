@@ -40,7 +40,7 @@ jobs:
           VERSIONS=$(curl -X GET -H "Authorization: Basic bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions)
           echo "$VERSIONS"
           jq -c '.[]' $VERSIONS | while read i; do
-            echo "$i.name"
+            echo "$i"
           done
 
       - name: Generate slack report
