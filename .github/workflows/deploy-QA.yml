@@ -30,7 +30,7 @@ jobs:
       - name: Get Jira tickets for version
         run: |
           fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
-          echo "Getting jira tickets related to React-Native SDK v$plugin_version"
+          echo "Getting jira tickets related to React-Native SDK v$fixed_version"
 
       - name: Generate slack report
         run: | 
