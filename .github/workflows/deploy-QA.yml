@@ -25,7 +25,7 @@ jobs:
 
       - name: Push to NPM
         run: |
-          npm publish --dry-run
+          npm publish --tag QA --dry-run
       
       - name: Get Jira tickets for version
         run: |
