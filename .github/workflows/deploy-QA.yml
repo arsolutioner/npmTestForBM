@@ -30,12 +30,15 @@ jobs:
         with:
           token: env.NPM_TOKEN
           dry-run: true
-          tag: "QA"
+          tag: QA
       
       - name: Get Jira tickets for version
         run: |
           fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
-          echo "Getting jira tickets related to React-Native SDK v$fixed_version"
+          jira_fixed_version="React-Native SDK v$fixed_version"
+          echo "Getting jira tickets related to $jira_fixed_version"
+          VERSIONS=$(curl -X GET -H "Authorization: Basic bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions)
+          echo "$VERSIONS"
 
       - name: Generate slack report
         run: | 
