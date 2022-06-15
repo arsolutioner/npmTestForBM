@@ -28,6 +28,7 @@ jobs:
               version_id=${version#"$jira_fixed_version"}
               echo "$version_id"
               curl -X GET -H "Authorization: Basic bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU=" https://appsflyer.atlassian.net/rest/api/2/search?jql=fixVersion=$version_id | jq -r '.issues[] | { key, "summary": .fields["summary"] }' | while read issue ; do
+                echo "lalala"
                 echo "$issue"
               done
             fi
