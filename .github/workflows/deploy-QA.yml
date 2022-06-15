@@ -28,9 +28,9 @@ jobs:
             fi
           done
           if [ ! fixed_version_found ];then
-              echo "${jira_fixed_version} Is not found!"
-              exit 1
-            fi
+            echo "${jira_fixed_version} Is not found!"
+            exit 1
+          fi
 
       - name: Update package.json file
         run: |
