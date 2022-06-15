@@ -27,7 +27,7 @@ jobs:
               fixed_version_found=true
             fi
           done
-          if [ !fixed_version_found ];then
+          if [ fixed_version_found == false ];then
             echo "${jira_fixed_version} is not found!"
             exit 1
           fi
