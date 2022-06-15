@@ -16,7 +16,7 @@ jobs:
           git config --global user.name env.COMMIT_AUTHOR
           git config --global user.email env.COMMIT_EMAIL
 
-      - name: Check if the fixed version is on Jira
+      - name: Check if fixed version is on Jira
         run: |
           fixed_version_found=false
           fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
@@ -27,10 +27,10 @@ jobs:
               fixed_version_found=true
             fi
           done
-          if [ ! fixed_version_found ];then
-              echo "${jira_fixed_version} Is not found!"
-              exit 1
-            fi
+          if [ !fixed_version_found ];then
+            echo "${jira_fixed_version} is not found!"
+            exit 1
+          fi
 
       - name: Update package.json file
         run: |
