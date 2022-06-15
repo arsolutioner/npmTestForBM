@@ -22,6 +22,8 @@ jobs:
           fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
           jira_fixed_version="React-Native SDK v$fixed_version"
           curl -X GET -H "Authorization: Basic bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions | jq -r '.[]' | while read version ; do
+            echo "$version"
+            echo "lalala"
             version_name=$(echo "$version" | jq -r '.name')
             version_url=$(echo "$version" | jq -r '.self')
             echo "$version_name"
