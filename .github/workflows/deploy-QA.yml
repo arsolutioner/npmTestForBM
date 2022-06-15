@@ -53,10 +53,11 @@ jobs:
           fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
           jira_fixed_version="React-Native SDK v$fixed_version"
           echo "Getting jira tickets related to $jira_fixed_version"
-          curl -X GET -H "Authorization: Basic bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions | jq -r '.[]' | while read version ; do
-            if [ version.name == "$jira_fixed_version" ];then
-              echo "${version.name}"
-              echo "${version.self}"
+          # curl -X GET -H "Authorization: Basic bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions | jq -r '.[] | "\(.name) \(.self)"' | while read version ; do
+          curl -X GET -H "Authorization: Basic bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions | jq -r '.[] | "\(.name) \(.self)"' | while read version ; do
+            if [ "$name" == "$jira_fixed_version" ];then
+              echo "${name}"
+              echo "${self}"
             fi
           done
 
