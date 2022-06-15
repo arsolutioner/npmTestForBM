@@ -21,10 +21,11 @@ jobs:
           fixed_version_found=false
           fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
           jira_fixed_version="React-Native SDK v$fixed_version"
-          curl -X GET -H "Authorization: Basic bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions | jq -r '.[].name' | while read name ; do
-            if [ "$name" == "$jira_fixed_version" ];then
-              echo "${name} Found!"
+          curl -X GET -H "Authorization: Basic bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions | jq -r '.[] | ("\(.name)" "\(.self)")' | while read version ; do
+            if [ "$version[0]" == "$jira_fixed_version" ];then
+              echo "${version[0]} Found!"
               fixed_version_found=true
+              echo ${version[1]}
             fi
           done
           if [ fixed_version_found == false ];then
@@ -47,19 +48,6 @@ jobs:
           token: env.NPM_TOKEN
           dry-run: true
           tag: QA
-      
-      - name: Get Jira tickets for version
-        run: |
-          fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
-          jira_fixed_version="React-Native SDK v$fixed_version"
-          echo "Getting jira tickets related to $jira_fixed_version"
-          # curl -X GET -H "Authorization: Basic bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions | jq -r '.[] | "\(.name) \(.self)"' | while read version ; do
-          curl -X GET -H "Authorization: Basic bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions | jq -r '.[] | "\(.name) \(.self)"' | while read version ; do
-            if [ "$name" == "$jira_fixed_version" ];then
-              echo "${name}"
-              echo "${self}"
-            fi
-          done
 
       - name: Generate slack report
         run: | 
