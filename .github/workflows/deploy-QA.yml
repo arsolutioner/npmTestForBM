@@ -27,7 +27,8 @@ jobs:
               fixed_version_found=true
             fi
           done
-          if [ ! fixed_version_found ];then
+          echo "lalal $fixed_version_found"
+          if [ !fixed_version_found ];then
             echo "${jira_fixed_version} Is not found!"
             exit 1
           fi
