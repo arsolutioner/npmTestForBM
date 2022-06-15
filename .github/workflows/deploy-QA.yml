@@ -26,7 +26,7 @@ jobs:
               echo "${jira_fixed_version} Found!"
               fixed_version_found=true
               version_id=${version#"$jira_fixed_version"}
-              echo $(curl -X GET -H "Authorization: Basic bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU=" https://appsflyer.atlassian.net/rest/api/2/search?jql=fixVersion=$version_id | jq -r '.issues[] |  .key + " - " + .fields["summary"]')
+              echo $(curl -X GET -H "Authorization: Basic bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU=" https://appsflyer.atlassian.net/rest/api/2/search?jql=fixVersion=$version_id | jq -r '.issues[] |  .key + " - " + .fields["summary"] + "\n"')
             fi
           done
           if [ fixed_version_found == false ];then
