@@ -24,10 +24,10 @@ jobs:
           curl -X GET -H "Authorization: Basic bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions | jq -r '.[]' | while read version ; do
             echo "$version"
             echo "lalala"
-            version_name=$(echo "$version" | jq -r '.name')
-            version_url=$(echo "$version" | jq -r '.self')
-            echo "$version_name"
-            echo "$version_url"
+            # version_name=$(echo "$version" | jq -r '.name')
+            # version_url=$(echo "$version" | jq -r '.self')
+            # echo "$version_name"
+            # echo "$version_url"
             if [ "$version[0]" == "$jira_fixed_version" ];then
               echo "${version[0]} Found!"
               fixed_version_found=true
