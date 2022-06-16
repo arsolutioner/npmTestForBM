@@ -33,10 +33,12 @@ jobs:
         
       - name: Check if fixed version is on Jira
         run: |
+          if [ "$JIRA_TOKEN" == "" ]; then
+            echo "its empty"
+          else
+            echo "ther is something"
+          fi
           # jira_token="$JIRA_TOKEN"
-          echo "$JIRA_TOKEN  lalala" > la.txt
-          cat la.txt
-          ls -l
           jira_token="bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU"
           fixed_version_found=false
           fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
