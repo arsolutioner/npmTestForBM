@@ -7,7 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: Staging
     steps:
-      - shell: bash
       - uses: actions/checkout@v3
       - name: Login to Github
         env: 
@@ -17,6 +16,13 @@ jobs:
           git config --global user.name env.COMMIT_AUTHOR
           git config --global user.email env.COMMIT_EMAIL
 
+      - name: test curl
+        env:
+          JIRA_TOKEN: ${{ secrets.CI_JIRA_TOKEN }}
+        run: |
+          lala='curl -X GET -H "Authorization: Basic $JIRA_TOKEN=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions'
+          echo $(eval $lala)
+        
       - name: Check if fixed version is on Jira
         env:
           JIRA_TOKEN: ${{ secrets.CI_JIRA_TOKEN }}
