@@ -47,13 +47,15 @@ jobs:
           git push
 
       - name: Push to NPM
-        env:
-          CI_NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          token: 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
-          dry-run: false
-          tag: QA
+        run: |
+          npm publish --tag QA
+        # env:
+        #   CI_NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        # uses: JS-DevTools/npm-publish@v1
+        # with:
+        #   token: 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
+        #   dry-run: false
+        #   tag: QA
 
       - name: Generate slack report
         run: | 
