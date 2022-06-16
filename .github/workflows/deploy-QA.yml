@@ -33,7 +33,7 @@ jobs:
         
       - name: Check if fixed version is on Jira
         run: |
-          if [ "$JIRA_TOKEN" == "" ]; then
+          if [ "$COMMIT_EMAIL" == "" ]; then
             echo "its empty"
           else
             echo "ther is something"
