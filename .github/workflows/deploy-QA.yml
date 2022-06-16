@@ -20,7 +20,7 @@ jobs:
       - name: Check if fixed version is on Jira
         env:
           # JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
-          # JIRA_TOKEN: amittt
+          JIRA_TOKEN2: amittt
 
         run: |
           fixed_version_found=false
