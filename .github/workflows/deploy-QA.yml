@@ -57,11 +57,12 @@ jobs:
 
       - name: Generate slack report
         run: | 
-          ls -l
-          # CHANGES=$(cat "$jira_fixed_version-releasenotes".txt)
-          CHANGES="dummy changes"
+          fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
+          jira_fixed_version="React-Native SDK v$fixed_version"
+          plugin_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+-rc[0-9]+')
+          CHANGES=$(cat "$jira_fixed_version-releasenotes".txt)
           REPORT=":react::react::react::react::react::react::react::react::react::react:\n
-                React Native: \`$plugin_version\` is published to \`QA\`\n
+                React Native \`$plugin_version\` is published to \`QA\`\n
                 Branch: \`${{github.ref_name}}\`\n\n
                 Changes and fixes:\n
                 $CHANGES
