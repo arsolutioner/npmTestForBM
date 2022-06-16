@@ -2,6 +2,11 @@ name: Deploy To QA
 
 on: [workflow_call]
 
+env:
+  COMMIT_AUTHOR: ${{ secrets.CI_COMMIT_AUTHOR }}
+  COMMIT_EMAIL: ${{ secrets.CI_COMMIT_EMAIL }}
+  JIRA_TOKEN: ${{ secrets.CI_JIRA_TOKEN }}
+
 jobs:
   Deploy-to-QA:
     runs-on: ubuntu-latest
@@ -9,9 +14,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Login to Github
-        env: 
-          COMMIT_AUTHOR: ${{ secrets.CI_COMMIT_AUTHOR }}
-          COMMIT_EMAIL: ${{ secrets.CI_COMMIT_EMAIL }}
+        # env: 
+        #   COMMIT_AUTHOR: ${{ secrets.CI_COMMIT_AUTHOR }}
+        #   COMMIT_EMAIL: ${{ secrets.CI_COMMIT_EMAIL }}
         run: |
           git config --global user.name env.COMMIT_AUTHOR
           git config --global user.email env.COMMIT_EMAIL
@@ -30,8 +35,8 @@ jobs:
           # echo $(eval $lala)
         
       - name: Check if fixed version is on Jira
-        with:
-          JIRA_TOKEN: ${{ secrets.CI_JIRA_TOKEN }}
+        # env:
+        #   JIRA_TOKEN: ${{ secrets.CI_JIRA_TOKEN }}
         run: |
           jira_token="$JIRA_TOKEN"
           # jira_token="bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU"
