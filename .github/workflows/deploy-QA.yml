@@ -38,6 +38,11 @@ jobs:
           else
             echo "ther is something"
           fi
+          if [ $env.JIRA_TOKEN == "" ]; then
+            echo "its empty"
+          else
+            echo "ther is something"
+          fi
           if [ "$env.COMMIT_EMAIL" == "" ]; then
             echo "its empty"
           else
