@@ -16,14 +16,14 @@ jobs:
           git config --global user.name env.COMMIT_AUTHOR
           git config --global user.email env.COMMIT_EMAIL
 
-      - name: test curl
-        env:
-          JIRA_TOKEN: ${{ secrets.CI_JIRA_TOKEN }}
-        uses: indiesdev/curl@v1.1
-        with:
-          url: https://appsflyer.atlassian.net/rest/api/3/project/11400/versions
-          basic-auth-token: JIRA_TOKEN
-          log-response: true
+      # - name: test curl
+      #   env:
+      #     JIRA_TOKEN: ${{ secrets.CI_JIRA_TOKEN }}
+      #   uses: indiesdev/curl@v1.1
+      #   with:
+      #     url: https://appsflyer.atlassian.net/rest/api/3/project/11400/versions
+      #     basic-auth-token: JIRA_TOKEN
+      #     log-response: true
         # run: |
           # echo $(curl -X GET -v https://appsflyer.atlassian.net/rest/api/3/project/11400/versions --user amit.kremer@appsflyer.com:pTraQdT4R9RyfCTYFbwSE253)
           # lala='curl -X GET -H "Authorization: Basic $JIRA_TOKEN=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions'
@@ -38,7 +38,8 @@ jobs:
           fixed_version_found=false
           fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
           jira_fixed_version="React-Native SDK v$fixed_version"
-          eval $(curl -X GET -H "Authorization: Basic $JIRA_TOKEN=" https://appsflyer.atlassian.net/rest/api/2/project/11400/versions | jq -r '.[] | .name+""+.id' | while read version ; do
+          # eval $(curl -X GET -H "Authorization: Basic $JIRA_TOKEN=" https://appsflyer.atlassian.net/rest/api/2/project/11400/versions | jq -r '.[] | .name+""+.id' | while read version ; do
+          eval $(curl -X GET -v https://appsflyer.atlassian.net/rest/api/2/project/11400/versions --user amit.kremer@appsflyer.com:pTraQdT4R9RyfCTYFbwSE253 | jq -r '.[] | .name+""+.id' | while read version ; do
             if [[ "$version" == *"$jira_fixed_version"* ]];then
               echo "${jira_fixed_version} Found!"
               fixed_version_found=true
