@@ -13,15 +13,14 @@ jobs:
           COMMIT_AUTHOR: ${{ secrets.CI_COMMIT_AUTHOR }}
           COMMIT_EMAIL: ${{ secrets.CI_COMMIT_EMAIL }}
         run: |
-          echo $COMMIT_AUTHOR
           git config --global user.name env.COMMIT_AUTHOR
           git config --global user.email env.COMMIT_EMAIL
 
       - name: Check if fixed version is on Jira
         env:
-          JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
+          MY_JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
         run: |
-          jira_token=$JIRA_TOKEN
+          jira_token=$MY_JIRA_TOKEN
           # jira_token="bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU"
           fixed_version_found=false
           fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
