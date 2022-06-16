@@ -57,7 +57,7 @@ jobs:
 
       - name: Generate slack report
         run: | 
-        ls -l
+          ls -l
           # CHANGES=$(cat "$jira_fixed_version-releasenotes".txt)
           CHANGES="dummy changes"
           REPORT=":react::react::react::react::react::react::react::react::react::react:\n
