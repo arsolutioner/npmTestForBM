@@ -61,4 +61,11 @@ jobs:
 
       - name: Send slack report
         run: |
+        CHANGES=$(cat "$jira_fixed_version-releasenotes".txt)
+        REPORT=":react::react::react::react::react::react::react::react::react::react:\n
+                React Native: `$plugin_version` is published to `QA`\n
+                Branch: `${{github.ref_name}}`\n\n
+                Changes and fixes:\n
+                $CHANGES
+                :react::react::react::react::react::react::react::react::react::react:"
           curl -X POST -H 'Content-type: application/json' --data '{"text": "Github-CI slack test"}'  https://hooks.slack.com/services/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
