@@ -26,7 +26,7 @@ jobs:
               echo "${jira_fixed_version} Found!"
               fixed_version_found=true
               version_id=${version#"$jira_fixed_version"}
-              echo $(curl -X GET -H "Authorization: Basic bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU=" https://appsflyer.atlassian.net/rest/api/2/search?jql=fixVersion=$version_id | jq -r '.issues[] |  .key + "-" + .fields["summary"] + "\n"') > "$jira_fixed_version-releasenotes".txt
+              echo $(curl -X GET -H "Authorization: Basic bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU=" https://appsflyer.atlassian.net/rest/api/2/search?jql=fixVersion=$version_id | jq -r '.issues[] |  .key + "-" + .fields["summary"] + "\n vfdff"') > "$jira_fixed_version-releasenotes".txt
             fi
           done
           if [ fixed_version_found == false ];then
@@ -37,7 +37,6 @@ jobs:
 
       - name: Update package.json file
         run: |
-          ls -l
           plugin_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+-rc[0-9]+')
           echo "Updating plugin to version $plugin_version"
           npm version $plugin_version
