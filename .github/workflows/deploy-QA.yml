@@ -19,14 +19,14 @@ jobs:
 
       - name: Check if fixed version is on Jira
         env:
-          # JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
+          JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
           JIRA_TOKEN2: amittt
 
         run: |
           fixed_version_found=false
           fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
           jira_fixed_version="React-Native SDK v$fixed_version"
-          echo $(curl --request GET --header 'authorization: ${{ secrets.JIRA_TOKEN }}' --url https://appsflyer.atlassian.net/rest/api/3/project/11400/versions)
+          echo $(curl --request GET --header "authorization: JIRA_TOKEN" --url https://appsflyer.atlassian.net/rest/api/3/project/11400/versions)
           curl -X GET -H "Authorization: $JIRA_TOKEN" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions | jq -r '.[] | .name+""+.id' | while read version ; do
             if [[ "$version" == *"$jira_fixed_version"* ]];then
               echo "${jira_fixed_version} Found!"
