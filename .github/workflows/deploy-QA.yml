@@ -30,7 +30,7 @@ jobs:
           # echo $(eval $lala)
         
       - name: Check if fixed version is on Jira
-        env:
+        with:
           JIRA_TOKEN: ${{ secrets.CI_JIRA_TOKEN }}
         run: |
           jira_token="$JIRA_TOKEN"
