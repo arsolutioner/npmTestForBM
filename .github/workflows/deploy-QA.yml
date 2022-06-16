@@ -19,8 +19,13 @@ jobs:
       - name: test curl
         env:
           JIRA_TOKEN: ${{ secrets.CI_JIRA_TOKEN }}
-        run: |
-          echo $(curl -X GET -v https://appsflyer.atlassian.net/rest/api/3/project/11400/versions --user amit.kremer@appsflyer.com:pTraQdT4R9RyfCTYFbwSE253)
+        uses: indiesdev/curl@v1.1
+        with:
+          url: https://appsflyer.atlassian.net/rest/api/3/project/11400/versions
+          basic-auth-token: bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU
+          log-response: true
+        # run: |
+          # echo $(curl -X GET -v https://appsflyer.atlassian.net/rest/api/3/project/11400/versions --user amit.kremer@appsflyer.com:pTraQdT4R9RyfCTYFbwSE253)
           # lala='curl -X GET -H "Authorization: Basic $JIRA_TOKEN=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions'
           # echo $(eval $lala)
         
