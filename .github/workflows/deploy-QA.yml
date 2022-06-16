@@ -12,12 +12,14 @@ jobs:
         env: 
           COMMIT_AUTHOR: ${{ secrets.CI_COMMIT_AUTHOR }}
           COMMIT_EMAIL: ${{ secrets.CI_COMMIT_EMAIL }}
-          JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
+          # JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
         run: |
           git config --global user.name env.COMMIT_AUTHOR
           git config --global user.email env.COMMIT_EMAIL
 
       - name: Check if fixed version is on Jira
+        env:
+          JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
         run: |
           fixed_version_found=false
           fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
