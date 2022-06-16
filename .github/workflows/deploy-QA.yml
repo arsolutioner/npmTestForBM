@@ -48,8 +48,11 @@ jobs:
 
       - name: Push to NPM
         run: |
-          echo "registry.npmjs.org/:_authToken=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" > ~/.npmrc
-          npm publish --tag QA
+          echo "//registry.npmjs.org/:_authToken=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" > ~/.npmrc
+          cd ~
+          ls -l
+          cat .npmrc
+          # npm publish --tag QA
         # env:
         #   CI_NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         # uses: JS-DevTools/npm-publish@v1
