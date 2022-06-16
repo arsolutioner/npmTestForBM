@@ -20,7 +20,7 @@ jobs:
         env:
           JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
         run: |
-          jira_token=env.JIRA_TOKEN
+          jira_token="$env.JIRA_TOKEN"
           # jira_token="bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU"
           fixed_version_found=false
           fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
