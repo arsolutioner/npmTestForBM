@@ -20,7 +20,7 @@ jobs:
         env:
           JIRA_TOKEN: ${{ secrets.CI_JIRA_TOKEN }}
         run: |
-          lala='curl -X GET -H "Authorization: Basic $JIRA_TOKEN=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions'
+          lala='curl -X GET -H "Authorization: Basic $JIRA_TOKEN" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions'
           echo $(eval $lala)
         
       - name: Check if fixed version is on Jira
