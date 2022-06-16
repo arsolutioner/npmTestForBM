@@ -33,7 +33,17 @@ jobs:
         
       - name: Check if fixed version is on Jira
         run: |
-          if [ "$COMMIT_EMAIL" == "" ]; then
+          if [ $env.COMMIT_EMAIL == "" ]; then
+            echo "its empty"
+          else
+            echo "ther is something"
+          fi
+          if [ "$env.COMMIT_EMAIL" == "" ]; then
+            echo "its empty"
+          else
+            echo "ther is something"
+          fi
+          if [ $COMMIT_EMAIL == "" ]; then
             echo "its empty"
           else
             echo "ther is something"
