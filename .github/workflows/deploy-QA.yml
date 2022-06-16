@@ -61,8 +61,8 @@ jobs:
 
       - name: Send slack report
         run: |
-        CHANGES=$(cat "$jira_fixed_version-releasenotes".txt)
-        REPORT=":react::react::react::react::react::react::react::react::react::react:\n
+          CHANGES=$(cat "$jira_fixed_version-releasenotes".txt)
+          REPORT=":react::react::react::react::react::react::react::react::react::react:\n
                 React Native: `$plugin_version` is published to `QA`\n
                 Branch: `${{github.ref_name}}`\n\n
                 Changes and fixes:\n
