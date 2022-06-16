@@ -52,7 +52,7 @@ jobs:
         uses: JS-DevTools/npm-publish@v1
         with:
           token: env.NPM_TOKEN
-          dry-run: true
+          dry-run: false
           tag: QA
 
       - name: Generate slack report
