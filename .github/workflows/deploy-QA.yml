@@ -33,37 +33,17 @@ jobs:
         
       - name: Check if fixed version is on Jira
         run: |
-          if [ $env.COMMIT_EMAIL == "" ]; then
-            echo "its empty"
-          else
-            echo "ther is something"
-          fi
-          if [ $env.JIRA_TOKEN == "" ]; then
-            echo "its empty"
-          else
-            echo "ther is something"
-          fi
-          if [ "$env.COMMIT_EMAIL" == "" ]; then
-            echo "its empty"
-          else
-            echo "ther is something"
-          fi
-          if [ $COMMIT_EMAIL == "" ]; then
-            echo "its empty"
-          else
-            echo "ther is something"
-          fi
           # jira_token="$JIRA_TOKEN"
           jira_token="bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU"
           fixed_version_found=false
           fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
           jira_fixed_version="React-Native SDK v$fixed_version"
-          curl -X GET -H "Authorization: Basic $jira_token=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions | jq -r '.[] | .name+""+.id' | while read version ; do
+          curl -X GET -H "Authorization: Basic $env.JIRA_TOKEN=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions | jq -r '.[] | .name+""+.id' | while read version ; do
             if [[ "$version" == *"$jira_fixed_version"* ]];then
               echo "${jira_fixed_version} Found!"
               fixed_version_found=true
               version_id=${version#"$jira_fixed_version"}
-              echo -e $(curl -X GET -H "Authorization: Basic $jira_token=" https://appsflyer.atlassian.net/rest/api/3/search?jql=fixVersion=$version_id | jq -r '.issues[] |  .key + "-" + .fields["summary"]+"@"') > "$jira_fixed_version-releasenotes".txt
+              echo -e $(curl -X GET -H "Authorization: Basic $env.JIRA_TOKEN=" https://appsflyer.atlassian.net/rest/api/3/search?jql=fixVersion=$version_id | jq -r '.issues[] |  .key + "-" + .fields["summary"]+"@"') > "$jira_fixed_version-releasenotes".txt
               sed -i -r -e "s/@/\n/gi" "$jira_fixed_version-releasenotes".txt
             fi
           done
