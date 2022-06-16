@@ -65,7 +65,8 @@ jobs:
                 Changes and fixes:\n
                 $CHANGES
                 :react::react::react::react::react::react::react::react::react::react:"
+          echo "$REPORT"
 
       - name: Send slack report
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text": "Github-CI slack test"}'  https://hooks.slack.com/services/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
+          curl -X POST -H 'Content-type: application/json' --data '{"text": "Github-CI slack test"}'  https://hooks.slack.com/services/T02B3AJ9B/D01DTMB1Z6F/8s7zWbLHSdYG6TqdKV39xtxP
