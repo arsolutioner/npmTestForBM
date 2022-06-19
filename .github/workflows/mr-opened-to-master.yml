@@ -15,8 +15,8 @@ jobs:
           COMMIT_AUTHOR: ${{ secrets.CI_COMMIT_AUTHOR }}
           COMMIT_EMAIL: ${{ secrets.CI_COMMIT_EMAIL }}
         run: |
-          git config --global user.name env.COMMIT_AUTHOR
-          git config --global user.email env.COMMIT_EMAIL
+          git config --global user.name $COMMIT_AUTHOR
+          git config --global user.email $COMMIT_EMAIL
       - uses: mdecoleman/pr-branch-name@1.2.0
         id: vars
         with:
