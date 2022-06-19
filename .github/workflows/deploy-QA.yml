@@ -3,11 +3,6 @@ name: Deploy To QA
 on:
   workflow_call:
 
-env:
-  COMMIT_AUTHOR: ${{ secrets.CI_COMMIT_AUTHOR }}
-  COMMIT_EMAIL: ${{ secrets.CI_COMMIT_EMAIL }}
-  JIRA_TOKEN: ${{ secrets.CI_JIRA_TOKEN }}
-
 jobs:
   Deploy-to-QA:
     runs-on: ubuntu-latest
@@ -15,6 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Login to Github
+      - env:
+          COMMIT_AUTHOR: ${{ secrets.CI_COMMIT_AUTHOR }}
+          COMMIT_EMAIL: ${{ secrets.CI_COMMIT_EMAIL }}
         run: |
           git config --global user.name env.COMMIT_AUTHOR
           git config --global user.email env.COMMIT_EMAIL
@@ -24,8 +22,25 @@ jobs:
           JIRA_TOKEN: ${{ secrets.CI_JIRA_TOKEN }}
           BRANCH_NAME: ${{github.ref_name}}
         run: |
-          chmod +x ./.github/scripts/get_jiras.sh
-          ./.github/scripts/get_jiras.sh
+          fixed_version_found=false
+          fixed_version=$(echo "$BRANCH_NAME" | grep -Eo '[0-9].[0-9].[0-9]+')
+          jira_fixed_version="React-Native SDK v$fixed_version"
+          echo "$jira_fixed_version"
+          curl -X GET -H "Authorization: Basic $JIRA_TOKEN=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions | jq -r '.[] | .name+""+.id' | while read version ; do
+            if [[ "$version" == *"$jira_fixed_version"* ]] ;then
+              echo "$jira_fixed_version Found!"
+              fixed_version_found=true
+              version_id=${version#"$jira_fixed_version"}
+              echo $(curl -X GET -H "Authorization: Basic $JIRA_TOKEN=" https://appsflyer.atlassian.net/rest/api/3/search?jql=fixVersion=$version_id | jq -r '.issues[] | "- " + .fields["summary"]+"@"') > "$jira_fixed_version-releasenotes".txt
+              sed -i -r -e "s/@ /\n/gi" "$jira_fixed_version-releasenotes".txt
+              sed -i -r -e "s/@/\n/gi" "$jira_fixed_version-releasenotes".txt
+            fi
+          done
+          if [ fixed_version_found == false ];then
+            echo "${jira_fixed_version} is not found!"
+            exit 1
+          fi
+          cat "$jira_fixed_version-releasenotes".txt
          
 
       - name: Update package.json file
@@ -41,8 +56,8 @@ jobs:
         uses: JS-DevTools/npm-publish@v1
         with:
           token: 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
-          dry-run: false
-          tag: QA
+          dry-run: true
+          tag: "QA"
 
       - name: Generate slack report
         run: | 
