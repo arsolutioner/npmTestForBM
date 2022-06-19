@@ -21,6 +21,7 @@ jobs:
         id: vars
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Update package.json file
         run: |
           echo ${{ steps.vars.outputs.branch }}
           echo "${{github.ref_name}}"
