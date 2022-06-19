@@ -1,6 +1,6 @@
 {
   "name": "npmtestforbm",
-  "version": "6.6.0-rc2",
+  "version": "6.6.0-rc4",
   "description": "React Native Appsflyer plugin",
   "main": "index.js",
   "types": "index.d.ts",
