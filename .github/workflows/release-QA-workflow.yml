@@ -14,6 +14,5 @@ jobs:
 
   Deploy-To-QA:
     # needs: [Build-Sample-Apps, Run-Unit-Tests]
-    environment: Staging
     uses: ./.github/workflows/deploy-QA.yml
     secrets: inherit
