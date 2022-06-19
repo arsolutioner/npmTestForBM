@@ -8,6 +8,8 @@ name: Build apps with AppsFlyer plugin
 on: 
   workflow_call:
   pull_request:
+    branches-ignore:
+      - 'releases/**'
     branches:
       - master
 
