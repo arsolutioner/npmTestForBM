@@ -17,7 +17,12 @@ jobs:
           git config --global user.email env.COMMIT_EMAIL
     
       - name: Update package.json file
-        run: |
+      - uses: mdecoleman/pr-branch-name@1.2.0
+        id: vars
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: |
+          echo ${{ steps.vars.outputs.branch }}
           echo "${{github.ref_name}}"
           plugin_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
           echo "Updating plugin to version $plugin_version"
