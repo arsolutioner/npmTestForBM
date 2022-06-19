@@ -40,8 +40,7 @@ jobs:
             echo "${jira_fixed_version} is not found!"
             exit 1
           fi
-          cat "$jira_fixed_version-releasenotes".txt
-         
+          cat "$jira_fixed_version-releasenotes".txt  
 
       - name: Update package.json file
         run: |
@@ -56,10 +55,10 @@ jobs:
         uses: JS-DevTools/npm-publish@v1
         with:
           token: env.CI_NPM_TOKEN
-          dry-run: true
+          dry-run: false
           tag: "QA"
 
-      - name: Generate slack report
+      - name: Generate and send slack report
         run: | 
           # iOS AppsFlyerSDK **v6.4.3**
           # Android AppsFlyerSDK **v6.4.3**
@@ -89,7 +88,4 @@ jobs:
                 :ios:$ios_sdk_version \n
                 :react::react::react::react::react::react::react::react::react::react:"
           echo "$REPORT"
-
-      - name: Send slack report
-        run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text": "Github-CI slack test"}'  https://hooks.slack.com/services/T02B3AJ9B/D01DTMB1Z6F/8s7zWbLHSdYG6TqdKV39xtxP
+          curl -X POST -H 'Content-type: application/json' --data '{"text": "$REPORT"}'  https://hooks.slack.com/services/T02B3AJ9B/D01DTMB1Z6F/8s7zWbLHSdYG6TqdKV39xtxP
