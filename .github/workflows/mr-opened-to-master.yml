@@ -26,4 +26,4 @@ jobs:
           plugin_version=$(echo "${{ steps.vars.outputs.branch }}" | grep -Eo '[0-9].[0-9].[0-9]+')
           echo "Updating plugin to version $plugin_version"
           npm version $plugin_version
-          git push master HEAD:${{ steps.vars.outputs.branch }}
+          git push origin HEAD:${{ steps.vars.outputs.branch }}
