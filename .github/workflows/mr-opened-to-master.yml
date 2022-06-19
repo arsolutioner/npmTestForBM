@@ -23,6 +23,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Update package.json file
         run: |
+          git branch
           echo ${{ steps.vars.outputs.branch }}
           plugin_version=$(echo "${{ steps.vars.outputs.branch }}" | grep -Eo '[0-9].[0-9].[0-9]+')
           echo "Updating plugin to version $plugin_version"
