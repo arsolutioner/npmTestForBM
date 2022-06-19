@@ -56,7 +56,7 @@ jobs:
         with:
           token: env.CI_NPM_TOKEN
           dry-run: false
-          tag: "QA"
+          tag: QA
 
       - name: Generate and send slack report
         run: | 
