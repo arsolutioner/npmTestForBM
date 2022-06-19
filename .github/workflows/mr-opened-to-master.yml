@@ -1,0 +1,24 @@
+name: Prepare plugin for production
+
+on:
+  workflow_call:
+
+jobs:
+  Deploy-to-QA:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login to Github
+        env:
+          COMMIT_AUTHOR: ${{ secrets.CI_COMMIT_AUTHOR }}
+          COMMIT_EMAIL: ${{ secrets.CI_COMMIT_EMAIL }}
+        run: |
+          git config --global user.name env.COMMIT_AUTHOR
+          git config --global user.email env.COMMIT_EMAIL
+    
+      - name: Update package.json file
+        run: |
+          plugin_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
+          echo "Updating plugin to version $plugin_version"
+          npm version $plugin_version
+          git push

@@ -54,7 +54,7 @@ jobs:
           CI_NPM_TOKEN: ${{ secrets.CI_NPM_TOKEN }}
         run: |
           echo "//registry.npmjs.org/:_authToken=$CI_NPM_TOKEN" > ~/.npmrc
-          npm publish --tag QA
+          npm publish --tag QA --dry-run
 
       - name: Generate and send slack report
         run: | 

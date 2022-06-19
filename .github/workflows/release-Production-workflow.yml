@@ -1,0 +1,12 @@
+name: New release workflow
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  run_if:
+    if: startsWith(github.head_ref, 'releases/')
+  Start-MR-To-Master:
+    uses: ./.github/workflows/mr-opened-to-master.yml
+    secrets: inherit
