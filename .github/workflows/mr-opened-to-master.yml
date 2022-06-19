@@ -9,12 +9,6 @@ jobs:
     if: startsWith(github.head_ref, 'releases/')
     runs-on: ubuntu-latest
     steps:
-      - uses: mdecoleman/pr-branch-name@1.2.0
-        id: vars
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - run: echo ${{ steps.vars.outputs.branch }}
-      
       - uses: actions/checkout@v3
       - name: Login to Github
         env:
@@ -23,11 +17,14 @@ jobs:
         run: |
           git config --global user.name env.COMMIT_AUTHOR
           git config --global user.email env.COMMIT_EMAIL
-    
+      - uses: mdecoleman/pr-branch-name@1.2.0
+        id: vars
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Update package.json file
         run: |
-          echo "${{github.ref}}"
-          plugin_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
+          echo ${{ steps.vars.outputs.branch }}
+          plugin_version=$(echo "${{ steps.vars.outputs.branch }}" | grep -Eo '[0-9].[0-9].[0-9]+')
           echo "Updating plugin to version $plugin_version"
           npm version $plugin_version
           git push
