@@ -1,6 +1,7 @@
 name: Deploy To QA
 
-on: [workflow_call]
+on:
+  workflow_call:
 
 env:
   COMMIT_AUTHOR: ${{ secrets.CI_COMMIT_AUTHOR }}
