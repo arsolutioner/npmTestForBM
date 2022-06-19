@@ -1,7 +1,9 @@
 #!/bin/bash
 
-JIRA_TOKEN="bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU"
-BRANCH_NAME="releases/6.x.x/6.6.x/6.6.0-rc2"
+# JIRA_TOKEN="bWF4aW1AYXBwc2ZseWVyLmNvbTp3Nk1OaGJSYUZsZnNhMXBiOEZkdzU3MDU"
+# BRANCH_NAME="releases/6.x.x/6.6.x/6.6.0-rc2"
+echo "$JIRA_TOKEN"
+echo "$BRANCH_NAME"
 fixed_version_found=false
 fixed_version=$(echo "$BRANCH_NAME" | grep -Eo '[0-9].[0-9].[0-9]+')
 jira_fixed_version="React-Native SDK v$fixed_version"
