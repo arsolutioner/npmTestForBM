@@ -1,10 +1,12 @@
 name: Prepare plugin for production
 
 on:
-  workflow_call:
+  pull_request:
+    types: [opened]
 
 jobs:
-  Deploy-to-QA:
+  Prepare-Plugin-For-Production:
+    if: startsWith(github.head_ref, 'releases/')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
