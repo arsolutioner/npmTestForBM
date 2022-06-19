@@ -21,7 +21,9 @@ jobs:
       - name: Check if fixed version is on Jira
         env:
           JIRA_TOKEN: ${{ secrets.CI_JIRA_TOKEN }}
-        run: ./.github/scripts/get_jiras.sh
+        run: |
+          chmod +x ./.github/scripts/get_jiras.sh
+          ./.github/scripts/get_jiras.sh
          
 
       - name: Update package.json file
