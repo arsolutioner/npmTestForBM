@@ -5,8 +5,7 @@ on:
     types: [opened]
 
 jobs:
-  run_if:
-    if: startsWith(github.head_ref, 'releases/')
-  Start-MR-To-Master:
-    uses: ./.github/workflows/mr-opened-to-master.yml
-    secrets: inherit
+    Start-MR-To-Master:
+      if: startsWith(github.head_ref, 'releases/')
+      uses: ./.github/workflows/mr-opened-to-master.yml
+      secrets: inherit
