@@ -53,8 +53,8 @@ jobs:
         env:
           CI_NPM_TOKEN: ${{ secrets.CI_NPM_TOKEN }}
         run: |
-        echo "//registry.npmjs.org/:_authToken=$CI_NPM_TOKEN" > ~/.npmrc
-        npm publish --tag QA
+          echo "//registry.npmjs.org/:_authToken=$CI_NPM_TOKEN" > ~/.npmrc
+          npm publish --tag QA
         # uses: JS-DevTools/npm-publish@v1
         # with:
         #   token: $CI_NPM_TOKEN
