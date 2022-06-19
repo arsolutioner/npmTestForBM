@@ -1,11 +1,34 @@
-# name: New release workflow
+name: New plugin release workflow
 
-# on:
-#   pull_request:
-#     types: [opened]
+on:
+  push:
+    branches:
+      - master
 
-# jobs:
-#     Start-MR-To-Master:
-#       if: startsWith(github.head_ref, 'releases/')
-#       uses: ./.github/workflows/mr-opened-to-master.yml
-#       secrets: inherit
+jobs:
+    Deploy-To-Production:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login to Github
+        env:
+          COMMIT_AUTHOR: ${{ secrets.CI_COMMIT_AUTHOR }}
+          COMMIT_EMAIL: ${{ secrets.CI_COMMIT_EMAIL }}
+        run: |
+          git config --global user.name env.COMMIT_AUTHOR
+          git config --global user.email env.COMMIT_EMAIL
+      
+      - name: Create new release
+        run: |
+          echo "push new release"
+      
+      - name: Push to NPM
+        env:
+          CI_NPM_TOKEN: ${{ secrets.CI_NPM_TOKEN }}
+        run: |
+          echo "//registry.npmjs.org/:_authToken=$CI_NPM_TOKEN" > ~/.npmrc
+          npm publish --dry-run
+
+      - name: Generate and send slack report
+        run: |
+          echo "slack report"
