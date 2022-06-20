@@ -68,24 +68,20 @@ jobs:
           jira_fixed_version="React-Native SDK v$fixed_version"
           plugin_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+-rc[0-9]+')
           CHANGES=$(cat "$jira_fixed_version-releasenotes".txt)
-          REPORT=":react::react::react::react::react::react::react::react::react::react:\n
-                \`$jira_fixed_version\` is published to *QA*\n
-                *Branch:*\n \`${{github.ref_name}}\`\n
-                \n
-                Changes and fixes:\n
-                $CHANGES
-                \n
-                *Installation:*\n
-                :npm: \`npm install react-native-appsflyer@QA --save\`\n
-                :github: \`npm install git://github.com/AppsFlyerSDK/appsflyer-react-native-plugin.git#${{github.ref_name}} --save\`\n
-                \n
-                *Source*:\n
-                :npm:\`https://www.npmjs.com/package/react-native-appsflyer\'\n
-                :github: \`https://github.com/AppsFlyerSDK/appsflyer-react-native-plugin\`\n
-                \n
-                *Dependencies:*\n
-                :android:$android_sdk_version \n
-                :ios:$ios_sdk_version \n
-                :react::react::react::react::react::react::react::react::react::react:"
+          REPORT=":react::react::react::react::react::react::react::react::react::react:
+          $jira_fixed_version is published to QA
+          Branch:
+          ${{github.ref_name}}
+          Changes and fixes:
+          $CHANGES
+          Installation:
+          :npm: npm install react-native-appsflyer@QA --save
+          :github: npm install git://github.com/AppsFlyerSDK/appsflyer-react-native-plugin.git#${{github.ref_name}} --save
+          Source:
+          :npm:https://www.npmjs.com/package/react-native-appsflyer
+          :github: https://github.com/AppsFlyerSDK/appsflyer-react-native-plugin
+          Dependencies:
+          :android:$android_sdk_version 
+          :ios:$ios_sdk_version"
           echo "$REPORT"
           curl -X POST -H 'Content-type: application/json' --data '{"msg": "'"$REPORT"'"}' "$SLACK_TOKEN"
