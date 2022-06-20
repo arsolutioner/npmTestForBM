@@ -15,6 +15,6 @@ jobs:
     uses: ./.github/workflows/build-workflow.yml
 
   Deploy-To-QA:
-    # needs: [Build-Sample-Apps, Run-Unit-Tests]
+    needs: [Run-Unit-Tests, Build-Sample-Apps]
     uses: ./.github/workflows/deploy-QA.yml
     secrets: inherit
