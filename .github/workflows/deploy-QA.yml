@@ -88,4 +88,4 @@ jobs:
                 :ios:$ios_sdk_version \n
                 :react::react::react::react::react::react::react::react::react::react:"
           echo "$REPORT"
-          curl -X POST -H 'Content-type: application/json' --data '{"msg": "$REPORT"}' "$SLACK_TOKEN"
+          curl -X POST -H 'Content-type: application/json' --data '{"msg": "'"$REPORT"'"}' "$SLACK_TOKEN"
