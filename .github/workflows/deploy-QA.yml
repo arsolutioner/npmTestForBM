@@ -86,4 +86,4 @@ jobs:
                 :ios:$ios_sdk_version \n
                 :react::react::react::react::react::react::react::react::react::react:"
           echo "$REPORT"
-          curl -X POST -H 'Content-type: application/json' --data '{"text": "$REPORT"}'  https://hooks.slack.com/services/T02B3AJ9B/D01DTMB1Z6F/8s7zWbLHSdYG6TqdKV39xtxP
+          curl -X POST -H 'Content-type: application/json' --data '{"msg": "$REPORT"}'  https://hooks.slack.com/workflows/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
