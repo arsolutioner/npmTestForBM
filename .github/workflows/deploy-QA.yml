@@ -57,6 +57,8 @@ jobs:
           npm publish --tag QA --dry-run
 
       - name: Generate and send slack report
+        env:
+          SLACK_TOKEN: ${{ secrets.CI_SLACK_TOKEN }}
         run: | 
           # iOS AppsFlyerSDK **v6.4.3**
           # Android AppsFlyerSDK **v6.4.3**
@@ -86,4 +88,4 @@ jobs:
                 :ios:$ios_sdk_version \n
                 :react::react::react::react::react::react::react::react::react::react:"
           echo "$REPORT"
-          curl -X POST -H 'Content-type: application/json' --data '{"msg": "$REPORT"}'  https://hooks.slack.com/workflows/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
+          curl -X POST -H 'Content-type: application/json' --data '{"msg": "$REPORT"}' $SLACK_TOKEN
