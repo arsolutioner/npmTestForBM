@@ -44,10 +44,10 @@ jobs:
 
       - name: Upload release notes as artifact to use in later workflows
       - uses: actions/upload-artifact@v2
-          with:
-            name: "$fixed_version-releasenotes"
-            path: "$jira_fixed_version-releasenotes".txt
-            retention-days: 5 
+        with:
+          name: "$fixed_version-releasenotes"
+          path: "$jira_fixed_version-releasenotes".txt
+          retention-days: 5 
 
       - name: Update package.json file
         run: |
