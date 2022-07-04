@@ -41,8 +41,9 @@ jobs:
             exit 1
           fi
           cat "$jira_fixed_version-releasenotes".txt  
-      - name: 'Upload release notes as artifact to use in later workflows'
+          
       - uses: actions/upload-artifact@v2
+      - name: 'Upload release notes as artifact to use in later workflows'
         with:
           name: "$fixed_version-releasenotes"
           path: "$jira_fixed_version-releasenotes".txt
