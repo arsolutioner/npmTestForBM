@@ -14,8 +14,8 @@ jobs:
           COMMIT_AUTHOR: ${{ secrets.CI_COMMIT_AUTHOR }}
           COMMIT_EMAIL: ${{ secrets.CI_COMMIT_EMAIL }}
         run: |
-          git config --global user.name env.COMMIT_AUTHOR
-          git config --global user.email env.COMMIT_EMAIL
+          git config --global user.name $COMMIT_AUTHOR
+          git config --global user.email $COMMIT_EMAIL
         
       - name: Check if fixed version is on Jira
         env:
@@ -23,8 +23,10 @@ jobs:
           BRANCH_NAME: ${{github.ref_name}}
         run: |
           fixed_version_found=false
-          fixed_version=$(echo "$BRANCH_NAME" | grep -Eo '[0-9].[0-9].[0-9]+')
-          jira_fixed_version="React-Native SDK v$fixed_version"
+          plugin_version=$(echo "$BRANCH_NAME" | grep -Eo '[0-9].[0-9].[0-9]+')
+          jira_fixed_version="React-Native SDK v$plugin_version"
+          echo "PLUGIN_VERSION=$plugin_version" >> $GITHUB_ENV
+          echo "JIRA_FIXED_VERSION=$jira_fixed_version" >> $GITHUB_ENV
           echo "$jira_fixed_version"
           curl -X GET -H "Authorization: Basic $JIRA_TOKEN=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions | jq -r '.[] | .name+""+.id' | while read version ; do
             if [[ "$version" == *"$jira_fixed_version"* ]] ;then
@@ -48,9 +50,9 @@ jobs:
 
       - name: Update package.json file
         run: |
-          plugin_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+-rc[0-9]+')
-          echo "Updating plugin to version $plugin_version"
-          npm version $plugin_version
+          plugin_rc_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+-rc[0-9]+')
+          echo "Updating plugin to version $plugin_rc_version"
+          npm version $plugin_rc_version
           git push
 
       - name: Push to NPM
@@ -66,7 +68,7 @@ jobs:
         run: | 
           ios_sdk_version=$(cat README.md | grep 'iOS AppsFlyerSDK \*\*v[0-9].[0-9].[0-9]\*\*')
           android_sdk_version=$(cat README.md | grep 'Android AppsFlyerSDK \*\*v[0-9].[0-9].[0-9]\*\*')
-          fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
-          jira_fixed_version="React-Native SDK v$fixed_version"
-          CHANGES=$(cat "$jira_fixed_version-releasenotes".txt)
-          curl -X POST -H 'Content-type: application/json' --data '{"jira_fixed_version": "'"$jira_fixed_version"'", "deploy_type": "QA", "install_tag": "QA", "git_branch": "'"${{github.ref_name}}"'", "changes_and_fixes": "'"$CHANGES"'", "android_dependencie": "'"$android_sdk_version"'", "ios_dependencie": "'"$ios_sdk_version"'"}' "$SLACK_TOKEN"
+          # fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
+          # jira_fixed_version="React-Native SDK v$env.PLUGIN_VERSION"
+          CHANGES=$(cat "$env.JIRA_FIXED_VERSION-releasenotes".txt)
+          curl -X POST -H 'Content-type: application/json' --data '{"jira_fixed_version": "'"$env.JIRA_FIXED_VERSION"'", "deploy_type": "QA", "install_tag": "QA", "git_branch": "'"${{github.ref_name}}"'", "changes_and_fixes": "'"$CHANGES"'", "android_dependencie": "'"$android_sdk_version"'", "ios_dependencie": "'"$ios_sdk_version"'"}' "$SLACK_TOKEN"
