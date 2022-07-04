@@ -34,7 +34,8 @@ jobs:
      
       - name: Update releasenotes
         run: |
-          echo "${{ env.GIT_BRANCH_RELEASE }}"
           CHANGES="## ${{ env.PLUGIN_VERSION }}\n Release date: *$(date +%F)*\n\n- amit > kremer\n"
+          cat CHANGELOG.md
+          touch lala.txt
           echo -e "$CHANGES\n$(cat CHANGELOG.md)" > CHANGELOG.md
           git push origin HEAD:${{ env.GIT_BRANCH_RELEASE }} --force
