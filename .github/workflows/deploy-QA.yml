@@ -69,5 +69,4 @@ jobs:
           fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
           jira_fixed_version="React-Native SDK v$fixed_version"
           CHANGES=$(cat "$jira_fixed_version-releasenotes".txt)
-
-          curl -X POST -H 'Content-type: application/json' --data '{"jira_fixed_version": "'"$jira_fixed_version"'", "deploy_type": "QA", git_branch": "'"${{github.ref_name}}"'", "changes_and_fixes": "'"$CHANGES"'", "android_dependencie": "'"$android_sdk_version"'", "ios_dependencie": "'"$ios_sdk_version"'"}' "$SLACK_TOKEN"
+          curl -X POST -H 'Content-type: application/json' --data '{"jira_fixed_version": "'"$jira_fixed_version"'", "deploy_type": "QA", install_tag: "QA", git_branch": "'"${{github.ref_name}}"'", "changes_and_fixes": "'"$CHANGES"'", "android_dependencie": "'"$android_sdk_version"'", "ios_dependencie": "'"$ios_sdk_version"'"}' "$SLACK_TOKEN"
