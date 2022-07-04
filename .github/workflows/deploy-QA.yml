@@ -41,6 +41,12 @@ jobs:
             exit 1
           fi
           cat "$jira_fixed_version-releasenotes".txt  
+      - name: 'Upload release notes as artifact to use in later workflows'
+        uses: actions/upload-artifact@v2
+        with:
+          name: "$fixed_version-releasenotes".txt
+          path: "$jira_fixed_version-releasenotes".txt
+          retention-days: 5 
 
       - name: Update package.json file
         run: |
@@ -66,4 +72,4 @@ jobs:
           jira_fixed_version="React-Native SDK v$fixed_version"
           CHANGES=$(cat "$jira_fixed_version-releasenotes".txt)
 
-          curl -X POST -H 'Content-type: application/json' --data '{"jira_fixed_version": "'"$jira_fixed_version"'", "deploy_type": "QA", "git_branch": "'"${{github.ref_name}}"'", "changes_and_fixes": "'"$CHANGES"'", "android_dependencie": "'"$android_sdk_version"'", "ios_dependencie": "'"$ios_sdk_version"'"}' "$SLACK_TOKEN"
+          curl -X POST -H 'Content-type: application/json' --data '{"jira_fixed_version": "'"$jira_fixed_version"'", "deploy_type": "QA", "install_tag": "@QA", git_branch": "'"${{github.ref_name}}"'", "changes_and_fixes": "'"$CHANGES"'", "android_dependencie": "'"$android_sdk_version"'", "ios_dependencie": "'"$ios_sdk_version"'"}' "$SLACK_TOKEN"

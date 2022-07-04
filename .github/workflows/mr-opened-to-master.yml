@@ -27,3 +27,7 @@ jobs:
           echo "Updating plugin to version $plugin_version"
           npm version $plugin_version
           git push origin HEAD:${{ steps.vars.outputs.branch }} --force
+      - name: Update releasenotes
+        run: |
+          echo "new release notes"
+          
