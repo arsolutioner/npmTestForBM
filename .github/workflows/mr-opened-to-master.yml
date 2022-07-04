@@ -33,7 +33,7 @@ jobs:
      
       - name: Update releasenotes
         run: |
-          DATE=$(date '%(%Y-%m-%d)T')
+          DATE=$(date +%F)
           echo "$DATE"
-          CHANGES="## ${{ env.PLUGIN_VERSION }}\n Release date: *$(date '%(%Y-%m-%d)T')*\n\n- amit > kremer\n"
+          CHANGES="## ${{ env.PLUGIN_VERSION }}\n Release date: *$(date +%F)*\n\n- amit > kremer\n"
           echo -e "$CHANGES\n$(cat CHANGELOG.md)" > CHANGELOG.md
