@@ -70,5 +70,5 @@ jobs:
           android_sdk_version=$(cat README.md | grep 'Android AppsFlyerSDK \*\*v[0-9].[0-9].[0-9]\*\*')
           # fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
           # jira_fixed_version="React-Native SDK v$env.PLUGIN_VERSION"
-          CHANGES=$(cat "$env.JIRA_FIXED_VERSION-releasenotes".txt)
-          curl -X POST -H 'Content-type: application/json' --data '{"jira_fixed_version": "'"$env.JIRA_FIXED_VERSION"'", "deploy_type": "QA", "install_tag": "QA", "git_branch": "'"${{github.ref_name}}"'", "changes_and_fixes": "'"$CHANGES"'", "android_dependencie": "'"$android_sdk_version"'", "ios_dependencie": "'"$ios_sdk_version"'"}' "$SLACK_TOKEN"
+          CHANGES=$(cat "${{env.JIRA_FIXED_VERSION}}-releasenotes".txt)
+          curl -X POST -H 'Content-type: application/json' --data '{"jira_fixed_version": "'"${{env.JIRA_FIXED_VERSION}}"'", "deploy_type": "QA", "install_tag": "QA", "git_branch": "'"${{github.ref_name}}"'", "changes_and_fixes": "'"$CHANGES"'", "android_dependencie": "'"$android_sdk_version"'", "ios_dependencie": "'"$ios_sdk_version"'"}' "$SLACK_TOKEN"
