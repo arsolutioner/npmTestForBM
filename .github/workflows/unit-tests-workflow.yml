@@ -2,6 +2,8 @@ name: Tests
 
 on: 
   pull_request:
+    branches-ignore:
+      - 'releases/**'
   push:
     branches-ignore:
       - 'releases/**'
