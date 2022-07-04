@@ -32,10 +32,11 @@ jobs:
           npm version $plugin_version
           git push origin HEAD:${{ steps.vars.outputs.branch }} --force
      
-      - name: Update releasenotes
+      - name: Update CHANGELOG.md
         run: |
           CHANGES="## ${{ env.PLUGIN_VERSION }}\n Release date: *$(date +%F)*\n\n- amit > kremer\n"
           echo -e "$CHANGES\n$(cat CHANGELOG.md)" > CHANGELOG.md
           cat CHANGELOG.md
+          git add .
           git commit -m "Update CHANGELOG.md"
           git push origin HEAD:${{ env.GIT_BRANCH_RELEASE }} --force
