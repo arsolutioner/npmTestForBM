@@ -4,6 +4,12 @@
 - React Native >> Android >> App crash on sendPushNotificationData.
 - React Native > Expo
 
+## 6.6.0
+ Release date: *2022-07-05*
+
+- React Native >> Android >> App crash on sendPushNotificationData.
+- React Native > Expo
+
 ## 6.4.31
 - Change Android build.gradle to use the latest Android SDK.
 - Change podspec to use the latest iOS SDK.
