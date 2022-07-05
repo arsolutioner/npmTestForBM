@@ -27,26 +27,24 @@ jobs:
           jira_fixed_version="React-Native SDK v$plugin_version"
           echo "PLUGIN_VERSION=$plugin_version" >> $GITHUB_ENV
           echo "JIRA_FIXED_VERSION=$jira_fixed_version" >> $GITHUB_ENV
-          echo "$jira_fixed_version"
-          curl -X GET -H "Authorization: Basic $JIRA_TOKEN=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions | jq -r '.[] | .name+""+.id' | while read version ; do
-            if [[ "$version" == *"$jira_fixed_version"* ]] ;then
-              echo "$jira_fixed_version Found!"
-              fixed_version_found=true
-              version_id=${version#"$jira_fixed_version"}
-              echo $(curl -X GET -H "Authorization: Basic $JIRA_TOKEN=" https://appsflyer.atlassian.net/rest/api/3/search?jql=fixVersion=$version_id | jq -r '.issues[] | "- " + .fields["summary"]+"@"') > "$jira_fixed_version-releasenotes".txt
-              sed -i -r -e "s/@ /\n/gi" "$jira_fixed_version-releasenotes".txt
-              sed -i -r -e "s/@/\n/gi" "$jira_fixed_version-releasenotes".txt
-            fi
-          done
-          if [ fixed_version_found == false ];then
-            echo "${jira_fixed_version} is not found!"
-            exit 1
-          fi
-          cat "$jira_fixed_version-releasenotes".txt  
-
-      - name: Upload release notes as artifact to use in later workflows
-        run: |
-          echo "upload"
+          chmod +x scripts/releaseNotesGenerator.sh
+          ./scripts/releaseNotesGenerator.sh $JIRA_TOKEN $jira_fixed_version
+          # echo "$jira_fixed_version"
+          # curl -X GET -H "Authorization: Basic $JIRA_TOKEN=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions | jq -r '.[] | .name+""+.id' | while read version ; do
+          #   if [[ "$version" == *"$jira_fixed_version"* ]] ;then
+          #     echo "$jira_fixed_version Found!"
+          #     fixed_version_found=true
+          #     version_id=${version#"$jira_fixed_version"}
+          #     echo $(curl -X GET -H "Authorization: Basic $JIRA_TOKEN=" https://appsflyer.atlassian.net/rest/api/3/search?jql=fixVersion=$version_id | jq -r '.issues[] | "- " + .fields["summary"]+"@"') > "$jira_fixed_version-releasenotes".txt
+          #     sed -i -r -e "s/@ /\n/gi" "$jira_fixed_version-releasenotes".txt
+          #     sed -i -r -e "s/@/\n/gi" "$jira_fixed_version-releasenotes".txt
+          #   fi
+          # done
+          # if [ fixed_version_found == false ];then
+          #   echo "${jira_fixed_version} is not found!"
+          #   exit 1
+          # fi
+          # cat "$jira_fixed_version-releasenotes".txt  
 
       - name: Update package.json file
         run: |

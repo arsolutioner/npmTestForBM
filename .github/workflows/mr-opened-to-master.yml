@@ -36,7 +36,6 @@ jobs:
         run: |
           CHANGES="## ${{ env.PLUGIN_VERSION }}\n Release date: *$(date +%F)*\n\n- amit > kremer\n"
           echo -e "$CHANGES\n$(cat CHANGELOG.md)" > CHANGELOG.md
-          cat CHANGELOG.md
           git add .
           git commit -m "Update CHANGELOG.md"
           git push origin HEAD:${{ env.GIT_BRANCH_RELEASE }} --force
