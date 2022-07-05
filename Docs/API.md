@@ -154,7 +154,7 @@ appsFlyer.initSdk(/*...*/);
 Therefore it is required to call the canceller method in the next [appStateChange](https://facebook.github.io/react-native/docs/appstate.html) callback. <br/>This is required for both the `onInstallConversionData` and `onAppOpenAttribution` callbacks.
 
 *Example:*
-
+this is api
 ```javascript
  _handleAppStateChange = (nextAppState) => {
     if (this.state.appState.match(/active|foreground/) && nextAppState === 'background') {

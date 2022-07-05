@@ -13,13 +13,13 @@ on:
 
 jobs:
   Build-Expo-android:
+    if: ${{ startsWith(github.head_ref, 'releases/') == false }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: 🚀  Install AppsFlyer on an Expo-Android
       run: | 
-        echo 'We need to figure out how to build ios... =\'
-    #     cd demos/appsflyer-expo-app
+        cd demos/appsflyer-expo-app
     #     yarn install
     #     yarn add expo
     #     yarn add ../../ --save
@@ -36,13 +36,13 @@ jobs:
     #     ./gradlew assembleRelease
 
   Build-RN-android:
+    if: ${{ startsWith(github.head_ref, 'releases/') == false }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: 🚀  Install AppsFlyer on a RN-Android
       run: |
-        echo 'We need to figure out how to build ios... =\'
-    #     cd demos/appsflyer-react-native-app
+        cd demos/appsflyer-react-native-app
     #     yarn install
     #     yarn add ../../ --save
     # - name: 🛠️  Build apk
@@ -52,13 +52,13 @@ jobs:
     #     ./gradlew assembleRelease
 
   Build-Expo-iOS:
+    if: ${{ startsWith(github.head_ref, 'releases/') == false }}
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
     - name: 🚀  Install AppsFlyer on an Expo-iOS
       run: |
-        echo 'We need to figure out how to build ios... =\'
-    #     cd demos/appsflyer-expo-app
+        cd demos/appsflyer-expo-app
     #     yarn install --force
     #     yarn add ../../ --save
     # - name: 🎩  Install expo cli
@@ -69,12 +69,13 @@ jobs:
     #     expo prebuild
 
   Build-RN-ios:
+    if: ${{ startsWith(github.head_ref, 'releases/') == false }}
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
     - name: 🚀  Install AppsFlyer on a RN-iOS
-    #   run: | 
-    #     cd demos/appsflyer-react-native-app
+      run: | 
+        cd demos/appsflyer-react-native-app
     #     yarn install --force
     #     yarn add ../../ --save
     # - name: 📥  Install Dependencies
@@ -82,5 +83,5 @@ jobs:
     #     cd demos/appsflyer-react-native-app/ios
     #     pod install --repo-update
     # - name: 🛠️  Build .app
-      run: echo 'We need to figure out how to build ios... =\'
+    #   run: echo 'We need to figure out how to build ios... =\'
      # run: xcodebuild -workspace demos/appsflyer-react-native-app/ios/AppsFlyerExample.xcworkspace -scheme AppsFlyerExample clean archive -allowProvisioningUpdates
