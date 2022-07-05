@@ -33,8 +33,13 @@ jobs:
           git push origin HEAD:${{ steps.vars.outputs.branch }} --force
      
       - name: Update CHANGELOG.md
+        env:
+          JIRA_TOKEN: ${{ secrets.CI_JIRA_TOKEN }}
+          JIRA_FIXED_VERSION: "React-Native SDK v${{env.PLUGIN_VERSION}}"
         run: |
-          NEW_VERSION_RELEASE_NOTES=$(cat "React-Native SDK v${{env.PLUGIN_VERSION}}-releasenotes".txt)
+          chmod +x .github/workflows/scripts/releaseNotesGenerator.sh
+          .github/workflows/scripts/releaseNotesGenerator.sh $JIRA_TOKEN "$JIRA_FIXED_VERSION"
+          NEW_VERSION_RELEASE_NOTES=$(cat "$JIRA_FIXED_VERSION-releasenotes".txt)
           NEW_VERSION_SECTION="## ${{ env.PLUGIN_VERSION }}\n Release date: *$(date +%F)*\n\n$NEW_VERSION_RELEASE_NOTES\n"
           echo -e "$NEW_VERSION_SECTION\n$(cat CHANGELOG.md)" > CHANGELOG.md
           git add CHANGELOG.md
