@@ -1,6 +1,13 @@
 name: Tests
 
-on: [pull_request, push, workflow_call]
+on: 
+  pull_request:
+    branches-ignore:
+      - 'releases/**'
+  push:
+    branches-ignore:
+      - 'releases/**'
+  workflow_call:
 
 jobs:
   Run-unit-tests:
