@@ -1,14 +1,17 @@
 name: New plugin release workflow
 
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
-      - master
+      - 'master'
     paths-ignore:
       - '**.md'
       - '**.yml'
 jobs:
   Deploy-To-Production:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -17,12 +20,19 @@ jobs:
           COMMIT_AUTHOR: ${{ secrets.CI_COMMIT_AUTHOR }}
           COMMIT_EMAIL: ${{ secrets.CI_COMMIT_EMAIL }}
         run: |
-          git config --global user.name env.COMMIT_AUTHOR
-          git config --global user.email env.COMMIT_EMAIL
-      
+          git config --global user.name $COMMIT_AUTHOR
+          git config --global user.email $COMMIT_EMAIL
+
+      - uses: mdecoleman/pr-branch-name@1.2.0
+        id: vars
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Create new release
         run: |
-          echo "push new release"
+          echo "${{ steps.vars.outputs.branch }}"
+          TAG=$(echo "${{ steps.vars.outputs.branch }}" | grep -Eo '[0-9].[0-9].[0-9]+')
+          echo "PLUGIN_VERSION=$TAG" >> $GITHUB_ENV
+          echo "push new release >> $TAG"
       
       - name: Push to NPM
         env:
@@ -31,17 +41,16 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=$CI_NPM_TOKEN" > ~/.npmrc
           npm publish --dry-run
 
-      - name: Download a single artifact
-        run : |
-          echo "download"
           
       - name: Generate and send slack report
+        env:
+          SLACK_TOKEN: ${{ secrets.CI_SLACK_TOKEN }}
+          JIRA_TOKEN: ${{ secrets.CI_JIRA_TOKEN }}
+          JIRA_FIXED_VERSION: "React-Native SDK v${{env.PLUGIN_VERSION}}"
         run: |
-          VAR=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
-          cat "$VAR-releasenotes"
-          # ios_sdk_version=$(cat README.md | grep 'iOS AppsFlyerSDK \*\*v[0-9].[0-9].[0-9]\*\*')
-          # android_sdk_version=$(cat README.md | grep 'Android AppsFlyerSDK \*\*v[0-9].[0-9].[0-9]\*\*')
-          # fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
-          # jira_fixed_version="React-Native SDK v$fixed_version"
-          # CHANGES=$(cat "$fixed_version-releasenotes".txt)
-          # curl -X POST -H 'Content-type: application/json' --data '{"jira_fixed_version": "'"$jira_fixed_version"'", "deploy_type": "QA", "install_tag": "@QA", git_branch": "'"${{github.ref_name}}"'", "changes_and_fixes": "'"$CHANGES"'", "android_dependencie": "'"$android_sdk_version"'", "ios_dependencie": "'"$ios_sdk_version"'"}' "$SLACK_TOKEN"
+          chmod +x .github/workflows/scripts/releaseNotesGenerator.sh
+          .github/workflows/scripts/releaseNotesGenerator.sh $JIRA_TOKEN "$JIRA_FIXED_VERSION"
+          ios_sdk_version=$(cat README.md | grep 'iOS AppsFlyerSDK \*\*v[0-9].[0-9].[0-9]\*\*')
+          android_sdk_version=$(cat README.md | grep 'Android AppsFlyerSDK \*\*v[0-9].[0-9].[0-9]\*\*')
+          CHANGES=$(cat "$JIRA_FIXED_VERSION-releasenotes".txt)
+          curl -X POST -H 'Content-type: application/json' --data '{"jira_fixed_version": "'"${{env.JIRA_FIXED_VERSION}}"'", "deploy_type": "Production", "install_tag": "latest", "git_branch": "'"${{github.ref_name}}"'", "changes_and_fixes": "'"$CHANGES"'", "android_dependencie": "'"$android_sdk_version"'", "ios_dependencie": "'"$ios_sdk_version"'"}' "$SLACK_TOKEN"
