@@ -1,5 +1,5 @@
 import { NativeEventEmitter, NativeModules } from 'react-native';
-// lalal
+// lalal2
 const { RNAppsFlyer } = NativeModules;
 const appsFlyer = {};
 const eventsMap = {};
