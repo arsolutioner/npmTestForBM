@@ -25,27 +25,10 @@ jobs:
           fixed_version_found=false
           plugin_version=$(echo "$BRANCH_NAME" | grep -Eo '[0-9].[0-9].[0-9]+')
           jira_fixed_version="React-Native SDK v$plugin_version"
-          echo "PLUGIN_VERSION=$plugin_version" >> $GITHUB_ENV
+          # echo "PLUGIN_VERSION=$plugin_version" >> $GITHUB_ENV
           echo "JIRA_FIXED_VERSION=$jira_fixed_version" >> $GITHUB_ENV
           chmod +x .github/workflows/scripts/releaseNotesGenerator.sh
-          .github/workflows/scripts/releaseNotesGenerator.sh $JIRA_TOKEN "$jira_fixed_version"
-          ls -al
-          # echo "$jira_fixed_version"
-          # curl -X GET -H "Authorization: Basic $JIRA_TOKEN=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions | jq -r '.[] | .name+""+.id' | while read version ; do
-          #   if [[ "$version" == *"$jira_fixed_version"* ]] ;then
-          #     echo "$jira_fixed_version Found!"
-          #     fixed_version_found=true
-          #     version_id=${version#"$jira_fixed_version"}
-          #     echo $(curl -X GET -H "Authorization: Basic $JIRA_TOKEN=" https://appsflyer.atlassian.net/rest/api/3/search?jql=fixVersion=$version_id | jq -r '.issues[] | "- " + .fields["summary"]+"@"') > "$jira_fixed_version-releasenotes".txt
-          #     sed -i -r -e "s/@ /\n/gi" "$jira_fixed_version-releasenotes".txt
-          #     sed -i -r -e "s/@/\n/gi" "$jira_fixed_version-releasenotes".txt
-          #   fi
-          # done
-          # if [ fixed_version_found == false ];then
-          #   echo "${jira_fixed_version} is not found!"
-          #   exit 1
-          # fi
-          # cat "$jira_fixed_version-releasenotes".txt  
+          .github/workflows/scripts/releaseNotesGenerator.sh $JIRA_TOKEN "$jira_fixed_version" 
 
       - name: Update package.json file
         run: |
@@ -67,7 +50,5 @@ jobs:
         run: | 
           ios_sdk_version=$(cat README.md | grep 'iOS AppsFlyerSDK \*\*v[0-9].[0-9].[0-9]\*\*')
           android_sdk_version=$(cat README.md | grep 'Android AppsFlyerSDK \*\*v[0-9].[0-9].[0-9]\*\*')
-          # fixed_version=$(echo "${{github.ref_name}}" | grep -Eo '[0-9].[0-9].[0-9]+')
-          # jira_fixed_version="React-Native SDK v$env.PLUGIN_VERSION"
           CHANGES=$(cat "${{env.JIRA_FIXED_VERSION}}-releasenotes".txt)
           curl -X POST -H 'Content-type: application/json' --data '{"jira_fixed_version": "'"${{env.JIRA_FIXED_VERSION}}"'", "deploy_type": "QA", "install_tag": "QA", "git_branch": "'"${{github.ref_name}}"'", "changes_and_fixes": "'"$CHANGES"'", "android_dependencie": "'"$android_sdk_version"'", "ios_dependencie": "'"$ios_sdk_version"'"}' "$SLACK_TOKEN"

@@ -25,7 +25,7 @@ jobs:
       - name: Update package.json file
         run: |
           plugin_version=$(echo "${{ steps.vars.outputs.branch }}" | grep -Eo '[0-9].[0-9].[0-9]+')
-          # we export plugin_version as env so we can use it in the next step
+          # we export plugin_version and release branch name as env so we can use them in the next step
           echo "PLUGIN_VERSION=$plugin_version" >> $GITHUB_ENV
           echo "GIT_BRANCH_RELEASE=${{ steps.vars.outputs.branch }}" >> $GITHUB_ENV
           echo "Updating plugin to version $plugin_version"
@@ -34,8 +34,9 @@ jobs:
      
       - name: Update CHANGELOG.md
         run: |
-          CHANGES="## ${{ env.PLUGIN_VERSION }}\n Release date: *$(date +%F)*\n\n- amit > kremer\n"
-          echo -e "$CHANGES\n$(cat CHANGELOG.md)" > CHANGELOG.md
-          git add .
+          NEW_VERSION_RELEASE_NOTES=$(cat "React-Native SDK v${{env.PLUGIN_VERSION}}-releasenotes".txt)
+          NEW_VERSION_SECTION="## ${{ env.PLUGIN_VERSION }}\n Release date: *$(date +%F)*\n\n$NEW_VERSION_RELEASE_NOTES\n"
+          echo -e "$NEW_VERSION_SECTION\n$(cat CHANGELOG.md)" > CHANGELOG.md
+          git add CHANGELOG.md
           git commit -m "Update CHANGELOG.md"
           git push origin HEAD:${{ env.GIT_BRANCH_RELEASE }} --force
