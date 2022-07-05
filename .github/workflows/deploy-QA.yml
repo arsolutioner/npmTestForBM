@@ -27,8 +27,8 @@ jobs:
           jira_fixed_version="React-Native SDK v$plugin_version"
           echo "PLUGIN_VERSION=$plugin_version" >> $GITHUB_ENV
           echo "JIRA_FIXED_VERSION=$jira_fixed_version" >> $GITHUB_ENV
-          chmod +x scripts/releaseNotesGenerator.sh
-          ./scripts/releaseNotesGenerator.sh $JIRA_TOKEN $jira_fixed_version
+          chmod +x .github/workflows/scripts/releaseNotesGenerator.sh
+          .github/workflows/scripts/releaseNotesGenerator.sh $JIRA_TOKEN $jira_fixed_version
           # echo "$jira_fixed_version"
           # curl -X GET -H "Authorization: Basic $JIRA_TOKEN=" https://appsflyer.atlassian.net/rest/api/3/project/11400/versions | jq -r '.[] | .name+""+.id' | while read version ; do
           #   if [[ "$version" == *"$jira_fixed_version"* ]] ;then
