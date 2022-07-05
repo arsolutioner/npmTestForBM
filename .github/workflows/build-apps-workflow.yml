@@ -97,6 +97,7 @@ jobs:
         xcodebuild -workspace AppsFlyerExample.xcworkspace \
             -scheme AppsFlyerExample \
             -sdk iphoneos \
+            -allowProvisioningUpdates \
             -configuration release \
             -archivePath $PWD/build/AppsFlyerExample.xcarchive \
             clean archive | xcpretty
