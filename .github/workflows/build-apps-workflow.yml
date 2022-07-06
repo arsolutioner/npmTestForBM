@@ -98,6 +98,7 @@ jobs:
       env:
         IOS_KEYS: ${{ secrets.IOS_KEYS }}
       run: |
+        export PATH="/opt/homebrew/opt/openssl@1.1/bin:$PATH"
         chmod +x .github/workflows/scripts/decryptSecrets.sh
         ./.github/workflows/scripts/decryptSecrets.sh
     - name: Archive app
