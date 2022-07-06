@@ -91,7 +91,10 @@ jobs:
     #   run: |
     #     cd demos/appsflyer-react-native-app/ios
     #     pod install --repo-update
-    - name: 🛠️  Decrypt secrets
+    - name: Install gpg
+      run: brew install gnupg
+
+    - name: Setup provisioning profile
       env:
         IOS_KEYS: ${{ secrets.IOS_KEYS }}
       run: |
