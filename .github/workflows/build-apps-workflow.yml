@@ -91,13 +91,13 @@ jobs:
       run: |
         cd demos/appsflyer-react-native-app/ios
         pod install --repo-update
-    - name: 🛠️  Archive app
+    - name: 🛠️  Decrypt secrets
+      env:
+        IOS_KEYS: ${{ secrets.IOS_KEYS }}
       run: |
         cd demos/appsflyer-react-native-app/ios
-        xcodebuild -workspace AppsFlyerExample.xcworkspace \
-            -scheme AppsFlyerExample \
-            -sdk iphoneos \
-            -allowProvisioningUpdates \
-            -configuration release \
-            -archivePath $PWD/build/AppsFlyerExample.xcarchive \
-            clean archive | xcpretty
+        ./.github/secrets/decryptSecrets.sh
+    - name: Archive app
+      run: |
+        cd demos/appsflyer-react-native-app/ios
+        ./.github/scripts/archiveApp.sh
