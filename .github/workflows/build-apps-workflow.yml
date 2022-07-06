@@ -82,15 +82,15 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
-    # - name: 🚀  Install AppsFlyer on a RN-iOS
-    #   run: | 
-    #     cd demos/appsflyer-react-native-app
-    #     yarn install --force
-    #     yarn add ../../ --save
-    # - name: 📥  Install Dependencies
-    #   run: |
-    #     cd demos/appsflyer-react-native-app/ios
-    #     pod install --repo-update
+    - name: 🚀  Install AppsFlyer on a RN-iOS
+      run: | 
+        cd demos/appsflyer-react-native-app
+        yarn install --force
+        yarn add ../../ --save
+    - name: 📥  Install Dependencies
+      run: |
+        cd demos/appsflyer-react-native-app/ios
+        pod install --repo-update
 
     - name: Setup provisioning profile
       env:

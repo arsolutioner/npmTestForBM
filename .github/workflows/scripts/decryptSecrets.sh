@@ -10,7 +10,6 @@ cp ./.github/secrets/GithubCIApp.mobileprovision.mobileprovision ~/Library/Mobil
 
 
 security create-keychain -p "$IOS_KEYS" build.keychain
-echo "here we are fine..."
 security import ./.github/secrets/GithubCICer.p12 -t agg -k ~/Library/Keychains/build.keychain -P "$IOS_KEYS" -A
 
 security list-keychains -s ~/Library/Keychains/build.keychain
