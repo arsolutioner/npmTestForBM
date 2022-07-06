@@ -91,14 +91,11 @@ jobs:
     #   run: |
     #     cd demos/appsflyer-react-native-app/ios
     #     pod install --repo-update
-    - name: Install gpg
-      run: brew install gnupg
 
     - name: Setup provisioning profile
       env:
         IOS_KEYS: ${{ secrets.IOS_KEYS }}
       run: |
-        export PATH="/opt/homebrew/opt/openssl@1.1/bin:$PATH"
         chmod +x .github/workflows/scripts/decryptSecrets.sh
         ./.github/workflows/scripts/decryptSecrets.sh
     - name: Archive app
