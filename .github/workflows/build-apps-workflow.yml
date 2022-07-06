@@ -95,9 +95,10 @@ jobs:
       env:
         IOS_KEYS: ${{ secrets.IOS_KEYS }}
       run: |
-        cd demos/appsflyer-react-native-app/ios
-        ./../../../.github/secrets/decryptSecrets.sh
+        ./.github/secrets/decryptSecrets.sh
     - name: Archive app
       run: |
+        pwd
         cd demos/appsflyer-react-native-app/ios
+        pwd
         ./../../../.github/scripts/archiveApp.sh
