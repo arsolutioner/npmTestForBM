@@ -82,22 +82,22 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
-    - name: 🚀  Install AppsFlyer on a RN-iOS
-      run: | 
-        cd demos/appsflyer-react-native-app
-        yarn install --force
-        yarn add ../../ --save
-    - name: 📥  Install Dependencies
-      run: |
-        cd demos/appsflyer-react-native-app/ios
-        pod install --repo-update
+    # - name: 🚀  Install AppsFlyer on a RN-iOS
+    #   run: | 
+    #     cd demos/appsflyer-react-native-app
+    #     yarn install --force
+    #     yarn add ../../ --save
+    # - name: 📥  Install Dependencies
+    #   run: |
+    #     cd demos/appsflyer-react-native-app/ios
+    #     pod install --repo-update
     - name: 🛠️  Decrypt secrets
       env:
         IOS_KEYS: ${{ secrets.IOS_KEYS }}
       run: |
         cd demos/appsflyer-react-native-app/ios
-        ./.github/secrets/decryptSecrets.sh
+        ./../../../.github/secrets/decryptSecrets.sh
     - name: Archive app
       run: |
         cd demos/appsflyer-react-native-app/ios
-        ./.github/scripts/archiveApp.sh
+        ./../../../.github/scripts/archiveApp.sh
