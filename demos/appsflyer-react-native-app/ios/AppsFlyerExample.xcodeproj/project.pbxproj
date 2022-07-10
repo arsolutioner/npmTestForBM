@@ -268,7 +268,8 @@
 		};
 		0FAC7F8580BA729A79BD766B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			alwaysOutOfDate = 1;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
@@ -278,14 +279,15 @@
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AppsFlyerExample/Pods-AppsFlyerExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AppsFlyerExample/Pods-AppsFlyerExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4721923C614EE6D1A58C11F1 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			alwaysOutOfDate = 1;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
@@ -295,7 +297,7 @@
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AppsFlyerExample/Pods-AppsFlyerExample-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AppsFlyerExample/Pods-AppsFlyerExample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
