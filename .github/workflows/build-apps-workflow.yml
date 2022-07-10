@@ -28,11 +28,11 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
-    - name: 🚀  Install AppsFlyer on a RN-iOS
+    - name: install react-native-appsflyer on an iOS app
       run: | 
         cd demos/appsflyer-react-native-app
         yarn install --force
-        yarn add ../../ --save
+        yarn add react-native-appsflyer --save
     - name: 📥  Install Dependencies
       run: |
         cd demos/appsflyer-react-native-app/ios
