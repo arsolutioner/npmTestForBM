@@ -9,4 +9,6 @@ set -eo pipefail
 #             -archivePath $PWD/build/AppsFlyerExample.xcarchive \
 #             clean archive | xcpretty
 
-xcodebuild -workspace AppsFlyerExample.xcworkspace | xcpretty
+xcodebuild -workspace AppsFlyerExample.xcworkspace \
+            -scheme AppsFlyerExample \
+             clean build | xcpretty

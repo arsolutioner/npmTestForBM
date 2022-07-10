@@ -299,7 +299,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#\"${PODS_ROOT}/Target Support Files/Pods-AppsFlyerExample/Pods-AppsFlyerExample-resources.sh\"\necho \"lalala\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AppsFlyerExample/Pods-AppsFlyerExample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		886093803E0B787FACAB784A /* [CP] Copy Pods Resources */ = {
