@@ -1,4 +1,4 @@
-name: Pre-release workflow
+name: Release plugin to QA
 
 on:
   push:

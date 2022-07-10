@@ -1,9 +1,4 @@
 name: Build apps with AppsFlyer plugin
-#                                          /--> rn --> build android
-#                                         /---> rn --> build ios
-# --> Install plugin on rn and expo apps 
-#                                        \---> expo --> build android
-#                                         \--> expo --> build ios
 
 on: 
   workflow_call:
@@ -12,70 +7,21 @@ on:
       - master
 
 jobs:
-  # Build-Expo-android:
-  #   if: ${{ startsWith(github.head_ref, 'releases/') == false }}
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   - name: 🚀  Install AppsFlyer on an Expo-Android
-  #     run: | 
-  #       cd demos/appsflyer-expo-app
-  #       yarn install
-  #       yarn add expo
-  #       yarn add ../../ --save
-  #   - name: 🎩  Install expo cli
-  #     run: npm install --global expo-cli
-  #   - name: 📦  Generate native folders
-  #     run: |
-  #       cd demos/appsflyer-expo-app
-  #       expo prebuild
-  #   - name: 🛠️  Build apk
-  #     run: |
-  #       cd demos/appsflyer-expo-app/android
-  #       chmod +x ./gradlew
-  #       ./gradlew assembleRelease
-
-  # Build-RN-android:
-  #   if: ${{ startsWith(github.head_ref, 'releases/') == false }}
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   - name: 🚀  Install AppsFlyer on a RN-Android
-  #     run: |
-  #       cd demos/appsflyer-react-native-app
-  #       yarn install
-  #       yarn add ../../ --save
-  #   - name: 🛠️  Build apk
-  #     run: |
-  #       cd demos/appsflyer-react-native-app/android
-  #       chmod +x ./gradlew
-  #       ./gradlew assembleRelease
-
-  # Build-Expo-iOS:
-  #   if: ${{ startsWith(github.head_ref, 'releases/') == false }}
-  #   runs-on: macos-latest
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   - name: 🚀  Install AppsFlyer on an Expo-iOS
-  #     run: |
-  #       cd demos/appsflyer-expo-app
-  #       yarn install --force
-  #       yarn add ../../ --save
-  #   - name: 🎩  Install expo cli
-  #     run: npm install --global expo-cli
-  #   - name: 📦  Generate native folders
-  #     run: |
-  #       cd demos/appsflyer-expo-app
-  #       expo prebuild
-  #   - name: 🛠️  Archive app
-  #     run: |
-  #       cd demos/appsflyer-expo-app/ios
-  #       xcodebuild -workspace expoAppsFlyer.xcworkspace \
-  #           -scheme expoAppsFlyer \
-  #           -sdk iphoneos \
-  #           -configuration release \
-  #           -archivePath $PWD/build/expoAppsFlyer.xcarchive \
-  #           clean archive | xcpretty
+  Build-RN-android:
+    if: ${{ startsWith(github.head_ref, 'releases/') == false }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: 🚀  Install AppsFlyer on a RN-Android
+      run: |
+        cd demos/appsflyer-react-native-app
+        yarn install
+        yarn add ../../ --save
+    - name: 🛠️  Build apk
+      run: |
+        cd demos/appsflyer-react-native-app/android
+        chmod +x ./gradlew
+        ./gradlew assembleRelease
 
   Build-RN-ios:
     if: ${{ startsWith(github.head_ref, 'releases/') == false }}
