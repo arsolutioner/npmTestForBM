@@ -287,7 +287,7 @@
 		4721923C614EE6D1A58C11F1 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
@@ -297,7 +297,7 @@
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AppsFlyerExample/Pods-AppsFlyerExample-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AppsFlyerExample/Pods-AppsFlyerExample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
