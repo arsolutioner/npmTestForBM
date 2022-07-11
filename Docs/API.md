@@ -152,7 +152,8 @@ appsFlyer.initSdk(/*...*/);
 
 `appsFlyer.onInstallConversionData` returns a function the will allow us to call `NativeAppEventEmitter.remove()`.<br/>
 Therefore it is required to call the canceller method in the next [appStateChange](https://facebook.github.io/react-native/docs/appstate.html) callback. <br/>This is required for both the `onInstallConversionData` and `onAppOpenAttribution` callbacks.
-
+test
+test
 *Example:*
 this is api
 ```javascript
