@@ -3,7 +3,7 @@ const { RNAppsFlyer } = NativeModules;
 const appsFlyer = {};
 const eventsMap = {};
 const appsFlyerEventEmitter = new NativeEventEmitter(RNAppsFlyer);
-
+// new code here
 function initSdkCallback(options, successC, errorC) {
 	if (typeof options.appId !== 'string' && typeof options.appId !== 'undefined') {
 		return errorC('appId should be a string!');
