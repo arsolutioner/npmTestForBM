@@ -1,3 +1,9 @@
+## 6.5.21
+ Release date: *2022-07-14*
+
+- React Native > remove ActivityEventListener
+- React Native Pluggin > Crash on app after upgrading to v6.5.2
+
 ## 6.6.0
  Release date: *2022-07-11*
 
